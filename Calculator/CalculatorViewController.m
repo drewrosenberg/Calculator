@@ -33,20 +33,6 @@
     return _brain;
 }
 
-
-//-------- check to see if a character has been entered--//
--(BOOL)DecimalPressed{
-    NSRange textRange;
-    textRange = [self.display.text rangeOfString:@"."];
-    
-    if (textRange.location != NSNotFound){
-        return YES;
-    }
-    else{return NO;}
-    
-    //------------------------------------
-}
-
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
 
