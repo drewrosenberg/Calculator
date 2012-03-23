@@ -35,9 +35,9 @@
 
 
 //-------- check to see if a character has been entered--//
--(BOOL)pressed:(NSString *)character {
+-(BOOL)DecimalPressed{
     NSRange textRange;
-    textRange = [self.display.text rangeOfString:character];
+    textRange = [self.display.text rangeOfString:@"."];
     
     if (textRange.location != NSNotFound){
         return YES;
@@ -50,32 +50,27 @@
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
 
-    //---- Get digit from button title
+    //Get digit from button title
     NSString *digit = [sender currentTitle];
     NSLog(@"digit pressed = %@", digit);
     
+    
+    //test to see if 0 is pressed with only a zero on the display
     if ([self.display.text isEqualToString:@"0"])
     {
         //no digit has been entered yet so don't append zeros
         if ([@"0" isEqualToString:digit]){return;}
     }
     
-    if ([@"." isEqualToString:digit]){
-        if (![self pressed:@"."]){
-            self.display.text = [self.display.text stringByAppendingString:digit];
-            self.keylog.text = [self.keylog.text stringByAppendingString:digit];
-        }
+    //if a decimal is pressed, make sure there isn't one already
+    if ([digit isEqualToString:@"."])
+    {
+        if( [self.display.text rangeOfString:@"."].location != NSNotFound){return;}
     }
-    else if ([self.display.text isEqualToString:@"0"]){
-        if (![@"0" isEqualToString:digit]){
-            self.display.text = digit;
-            self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
-        }
-    }
-    else {
-        self.display.text = [self.display.text stringByAppendingString:digit];
-        self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
-    }
+
+    //put the digit on the display and log
+    self.display.text = [self.display.text stringByAppendingString:digit];
+    self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {     
