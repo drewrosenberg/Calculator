@@ -60,6 +60,11 @@
     {
         //no digit has been entered yet so don't append zeros
         if ([@"0" isEqualToString:digit]){return;}
+        else{
+            self.display.text = digit;
+            self.keylog.text = [self.keylog.text stringByAppendingString:digit];
+            return;
+        }
     }
     
     //if a decimal is pressed, make sure there isn't one already
