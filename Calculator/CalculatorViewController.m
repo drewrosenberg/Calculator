@@ -41,18 +41,16 @@
     NSLog(@"digit pressed = %@", digit);
     
     
-    //test to see if 0 is pressed with only a zero on the display
-    if ([self.display.text isEqualToString:@"0"])
+    if (!self.userIsInTheMiddleOfEnteringANumber)
     {
-        //no digit has been entered yet so don't append zeros
-        if ([@"0" isEqualToString:digit]){return;}
-        else{
+        if (digit !=@"0"){
+            self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
             self.keylog.text = [self.keylog.text stringByAppendingString:digit];
-            return;
         }
+        return;
     }
-    
+        
     //if a decimal is pressed, make sure there isn't one already
     if ([digit isEqualToString:@"."])
     {
