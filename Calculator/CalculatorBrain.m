@@ -107,4 +107,9 @@
     }
     return [self popOperandOffStack:stack];
 }
+
++ (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
+{
+    return (0);
+}
 @end
