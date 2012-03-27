@@ -98,6 +98,14 @@
     
     return result;
 }
+
++ (NSSet *)variablesUsedInProgram:(id)Program
+{
+    NSSet *result;
+    return result;
+    
+}
+
 // am I supposed to create a second method or just update this one?
 + (double) runProgram:(id)program
 {
