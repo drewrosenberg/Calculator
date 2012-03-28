@@ -16,6 +16,7 @@
 
     @synthesize programStack = _programStack;
 
+
 ////////////// OPERAND STACK METHODS //////////////////////////
     - (NSMutableArray *)programStack
     {
@@ -23,7 +24,16 @@
         return _programStack;
     }
     
-    - (void)pushOperand:(double)operand
++ (NSSet *)variablesUsedInProgram:(id)Program
+{
+    NSSet *result;
+    //------>return NSSet of all keys in variableStack 
+    //result = ([result setWithArray:[variableStack allKeys]];
+    return result;
+    
+}
+
+- (void)pushOperand:(double)operand
     {
         [self.programStack addObject:[NSNumber numberWithDouble:operand]];
     }
@@ -58,12 +68,16 @@
 {
     double result = 0;
     
+    //get the last object off of the stack and remove it if it exists
     id topOfStack = [stack lastObject];
     if (topOfStack) [stack removeLastObject];
     
+    //if it's a number, result = the doubleValue of the number
     if ([topOfStack isKindOfClass:[NSNumber class]]){
         result = [topOfStack doubleValue];
     }
+    // if it is a string, perform the operation
+    //----------> Maybe here we cross reference variableValues before checking operations
     else if ([topOfStack isKindOfClass:[NSString class]]){
         {
             NSString *operation = topOfStack;
@@ -99,14 +113,7 @@
     return result;
 }
 
-+ (NSSet *)variablesUsedInProgram:(id)Program
-{
-    NSSet *result;
-    return result;
-    
-}
-
-// am I supposed to create a second method or just update this one?
+//// RunProgram Methods /////
 + (double) runProgram:(id)program
 {
     NSMutableArray *stack;
@@ -118,6 +125,9 @@
 
 + (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
 {
-    return (0);
+    //----> First load variables into some accessible location
+
+    //then runProgram
+    return ([self runProgram:program]);
 }
 @end
