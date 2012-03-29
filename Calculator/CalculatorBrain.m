@@ -26,9 +26,14 @@
     
 + (NSSet *)variablesUsedInProgram:(id)Program
 {
-    NSSet *result;
-    //------>return NSSet of all keys in variableStack 
-    //result = ([result setWithArray:[variableStack allKeys]];
+    NSSet *result = nil;
+    if ([Program isKindOfClass:[NSArray self]]){
+        for (int index = 0;index == [Program count]; index++){
+            if (![self isOperation:[Program objectAtIndex:index]]){
+                result = [result setByAddingObject:[Program objectAtIndex:index]];
+            }
+        }
+    }
     return result;
     
 }
