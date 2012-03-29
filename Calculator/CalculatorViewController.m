@@ -74,13 +74,13 @@
   
     self.display.text = resultString;
 }
-- (IBAction)enterPressed {
-    self.keylog.text = [CalculatorBrain descriptionOfProgram:_brain.program];
 
+- (IBAction)enterPressed {
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;   
 }
+
 - (IBAction)clearPressed {
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
