@@ -70,10 +70,40 @@
         return [self.programStack copy];
     }
 
++ (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack
+{
+    NSString *result;
+    //get the last object off of the stack and remove it if it exists
+    id topOfStack = [stack lastObject];
+    if (topOfStack) [stack removeLastObject];
+    
+    //if 2 number operation then:
+        //parameter 2 = descriptionOfTopOfStack, remove ", "
+        //parameter 1 = descriptionOfTopOfStack, remove ", "
+        //result = (parameter 2 concat operation concat parameter 1)
+    
+    //if 1 number operation then
+        //result = operation concat ( concat descriptionofTopOfStack concat )
+        //remove ", " from descriptionofTopOfStack
+
+    //if 0 number operation or number
+        //result = descriptionofTopOfStack concat topOfStack
+        
+    //add ", " to the end
+    
+    return result; 
+}
+
 + (NSString *) descriptionOfProgram:(id)program
     {
-        return @"implement in HW assignment 2";
+        
+        NSMutableArray *stack;
+        if ([program isKindOfClass:[NSArray self]]){
+            stack = [program mutableCopy];
+        }
+        return [self descriptionOfTopOfStack:stack];
     }
+
 
 + (double) popOperandOffStack:(NSMutableArray *)stack
 {
@@ -88,7 +118,6 @@
         result = [topOfStack doubleValue];
     }
     // if it is a string, perform the operation
-    //----------> Maybe here we cross reference variableValues before checking operations
     else if ([topOfStack isKindOfClass:[NSString class]]){
         {
             NSString *operation = topOfStack;
