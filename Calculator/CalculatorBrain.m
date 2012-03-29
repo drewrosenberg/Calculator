@@ -14,7 +14,7 @@
 
 @implementation CalculatorBrain
 
-    @synthesize programStack = _programStack;
+@synthesize programStack = _programStack;
 
 
 ////////////// OPERAND STACK METHODS //////////////////////////
@@ -131,12 +131,24 @@
 
 + (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
 {
-    //Go through program and replace all variables with values
-    //---> for index = 0 to number of objects in program
-    //---> if object is a variable    
-    //---> replaceObjectAtIndex: index withObject: variablevalue
-        
+    NSMutableArray *stack;
+    if ([program isKindOfClass:[NSArray self]]){
+        stack = [program mutableCopy];
+    }
+    
+    //---Go through program and replace all variables with their values
+    //for index = 0 to number of objects in program
+    for (int index =0; index == [stack count]; index++){
+    //if object is a string   
+       if ([[stack objectAtIndex:index] isKindOfClass:[NSString self]]){
+    //if object is a variable
+           if (![self isOperation:[stack objectAtIndex:index]]){
+                //replaceObjectAtIndex: index withObject: variablevalue
+                [stack replaceObjectAtIndex:index withObject:[variableValues objectForKey:[stack objectAtIndex:index]]];
+            }
+        }
+    }   
     //then runProgram
-    return ([self runProgram:program]);
+    return ([self popOperandOffStack:stack]);
 }
 @end
