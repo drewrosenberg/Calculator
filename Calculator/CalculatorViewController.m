@@ -46,7 +46,6 @@
         if (digit !=@"0"){
             self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
-            self.keylog.text = [self.keylog.text stringByAppendingString:digit];
         }
         return;
     }
@@ -59,36 +58,28 @@
 
     //put the digit on the display and log
     self.display.text = [self.display.text stringByAppendingString:digit];
-    self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {     
     NSString *operation = [sender currentTitle];
     
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
-    else{
-        self.keylog.text =[self.keylog.text stringByAppendingString:@" "];
-        }
-    
-    //log the operation and space to the key log
-    self.keylog.text = [self.keylog.text stringByAppendingString:operation];
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
-    
+
     double result = [self.brain performOperation:operation];
+
+    self.keylog.text = [CalculatorBrain descriptionOfProgram:_brain.program];
+
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
   
     [self.brain pushOperand:result];
     self.display.text = resultString;
 }
 - (IBAction)enterPressed {
-    //add a space to the log
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
+    self.keylog.text = [CalculatorBrain descriptionOfProgram:_brain.program];
 
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
-    self.decimalPressed = NO;
-
-    
+    self.decimalPressed = NO;   
 }
 - (IBAction)clearPressed {
     self.userIsInTheMiddleOfEnteringANumber = NO;
