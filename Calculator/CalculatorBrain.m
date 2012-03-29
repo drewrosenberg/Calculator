@@ -80,7 +80,7 @@
 
 +(BOOL) isOperation:(NSString *)operation
 {
-    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"PI", nil];
+    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"Pi", nil];
     if ([operationList member:operation]){return YES;}
     else{ return NO;}
 }
@@ -132,6 +132,7 @@
     //add ", " to the end
     result = [result stringByAppendingFormat:@", "];
     
+    NSLog(@"%@",result);
     return result; 
 }
 

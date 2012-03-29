@@ -53,10 +53,11 @@
     //if a decimal is pressed, make sure there isn't one already
     if ([digit isEqualToString:@"."])
     {
+        //return if decimal is already present
         if( [self.display.text rangeOfString:@"."].location != NSNotFound){return;}
     }
 
-    //put the digit on the display and log
+    //put the digit or decimal on the display
     self.display.text = [self.display.text stringByAppendingString:digit];
 }
 
@@ -71,7 +72,6 @@
 
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
   
-    [self.brain pushOperand:result];
     self.display.text = resultString;
 }
 - (IBAction)enterPressed {
