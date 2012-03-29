@@ -62,13 +62,28 @@
     
 }
   
++(BOOL) is2Operation: (NSString *)operation
+{
+    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*", nil];
+    
+    if ([operationList member:operation]){return YES;}
+    else{ return NO;}
+}
+
++(BOOL) is1Operation: (NSString *)operation
+{
+    NSSet * operationList = [NSSet setWithObjects:@"SIN",@"COS",@"SQRT", nil];
+    
+    if ([operationList member:operation]){return YES;}
+    else{ return NO;}
+}
+
 +(BOOL) isOperation:(NSString *)operation
 {
     NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"PI", nil];
     if ([operationList member:operation]){return YES;}
     else{ return NO;}
 }
-
 
 
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack
@@ -79,13 +94,21 @@
     if (topOfStack) [stack removeLastObject];
     
     //if 2 number operation then:
+    if ([self is2Operation:topOfStack]){
         //parameter 2 = descriptionOfTopOfStack, remove ", "
+        NSString * param2 = [self descriptionOfTopOfStack:stack];
         //parameter 1 = descriptionOfTopOfStack, remove ", "
+        NSString * param1 = [self descriptionOfTopOfStack:stack];
         //result = (parameter 2 concat operation concat parameter 1)
-    
+        result = [NSString stringWithFormat:@"%@%@%@",param1,topOfStack,param2];
+    }
+        
     //if 1 number operation then
+    if ([self is1Operation:topOfStack]){
         //result = operation concat ( concat descriptionofTopOfStack concat )
-        //remove ", " from descriptionofTopOfStack
+        //remove ", " from descriptionofTopOfStack        
+    }
+
 
     //if 0 number operation or number
         //result = descriptionofTopOfStack concat topOfStack
