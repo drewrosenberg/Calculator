@@ -105,20 +105,32 @@
         NSString * param1 = [self descriptionOfTopOfStack:stack];
         param1 = [self removeTrailingComma:param1];
         //result = (parameter 2 concat operation concat parameter 1)
-        result = [NSString stringWithFormat:@"%@%@%@%@%@",@"(",param1,topOfStack,param2,@")"];
+        result = [NSString stringWithFormat:@"(%@%@%@)",param1,topOfStack,param2];
     }
         
     //if 1 number operation then
-    if ([self is1Operation:topOfStack]){
+    else if ([self is1Operation:topOfStack]){
         //result = operation concat ( concat descriptionofTopOfStack concat )
-        //remove ", " from descriptionofTopOfStack        
+        NSString * param = [self descriptionOfTopOfStack:stack];
+        //remove ", "
+        param = [self removeTrailingComma:param];
+        result = [NSString stringWithFormat:@"%@(%@)",topOfStack,param];
     }
 
 
-    //if 0 number operation or number
+    //if 0 number operation
+    else if ([self isOperation:topOfStack]){
+        result = topOfStack;
+    }
+    
+    //if number
+    else if ([topOfStack isKindOfClass:[NSNumber self]]){
         //result = descriptionofTopOfStack concat topOfStack
-        
+        result = [topOfStack stringValue];
+    }
+     
     //add ", " to the end
+    result = [result stringByAppendingFormat:@", "];
     
     return result; 
 }
