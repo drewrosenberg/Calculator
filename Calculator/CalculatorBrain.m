@@ -45,6 +45,12 @@
     
 //////////////////////////////////////////////////////////////
 
++(BOOL) isOperation:(NSString *)operation
+{
+    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"PI", nil];
+    if ([operationList member:operation]){return YES;}
+    else{ return NO;}
+}
 
 ////////////// PERFORM OPERATION /////////////////////////////
     - (double)performOperation:(NSString * ) operation
@@ -125,8 +131,11 @@
 
 + (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
 {
-    //----> First load variables into some accessible location
-
+    //Go through program and replace all variables with values
+    //---> for index = 0 to number of objects in program
+    //---> if object is a variable    
+    //---> replaceObjectAtIndex: index withObject: variablevalue
+        
     //then runProgram
     return ([self runProgram:program]);
 }
