@@ -142,7 +142,7 @@
         if ([program isKindOfClass:[NSArray self]]){
             stack = [program mutableCopy];
         }
-        return [self descriptionOfTopOfStack:stack];
+        return [self removeTrailingComma:[self descriptionOfTopOfStack:stack]];
     }
 
 
