@@ -9,14 +9,20 @@
 #import <Foundation/Foundation.h>
 
 @interface CalculatorBrain : NSObject
+
+//instance methods
 - (void)pushOperand:(double)operand;
 - (void)clearOperands;
 - (double)performOperation:(NSString * ) operation;
-
 @property (readonly) id program; 
+
+//class methods
 + (double) runProgram:(id)program;
+
 + (double) runProgram:(id)program 
         usingVariableValues:(NSDictionary *)variableValues;
-+ (NSSet *)variablesUsedInProgram:(id)Program;
+
++ (NSSet *)variablesUsedInProgram:(id)program;
+
 + (NSString *) descriptionOfProgram:(id)program;
 @end

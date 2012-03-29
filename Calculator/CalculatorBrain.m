@@ -17,26 +17,13 @@
 @synthesize programStack = _programStack;
 
 
-////////////// OPERAND STACK METHODS //////////////////////////
-    - (NSMutableArray *)programStack
-    {
-        if (_programStack == nil) _programStack = [[NSMutableArray alloc] init];
-        return _programStack;
-    }
-    
-+ (NSSet *)variablesUsedInProgram:(id)Program
+////////////// Legacy Methods //////////////////////////
+- (NSMutableArray *)programStack
 {
-    NSSet *result = nil;
-    if ([Program isKindOfClass:[NSArray self]]){
-        for (int index = 0;index == [Program count]; index++){
-            if (![self isOperation:[Program objectAtIndex:index]]){
-                result = [result setByAddingObject:[Program objectAtIndex:index]];
-            }
-        }
-    }
-    return result;
-    
+    if (_programStack == nil) _programStack = [[NSMutableArray alloc] init];
+    return _programStack;
 }
+    
 
 - (void)pushOperand:(double)operand
     {
@@ -47,9 +34,34 @@
     {
         [self.programStack removeAllObjects];
     }
-    
-//////////////////////////////////////////////////////////////
 
+- (double)performOperation:(NSString * ) operation
+{
+    [self.programStack addObject:operation];
+    return [CalculatorBrain runProgram:self.program];
+}
+
+- (id)program
+{
+    return [self.programStack copy];
+}
+
+
+/////// API Methods /////////////////
++ (NSSet *)variablesUsedInProgram:(id)program
+{
+    NSSet *result = nil;
+    if ([program isKindOfClass:[NSArray self]]){
+        for (int index = 0;index == [program count]; index++){
+            if (![self isOperation:[program objectAtIndex:index]]){
+                result = [result setByAddingObject:[program objectAtIndex:index]];
+            }
+        }
+    }
+    return result;
+    
+}
+  
 +(BOOL) isOperation:(NSString *)operation
 {
     NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"PI", nil];
@@ -57,18 +69,7 @@
     else{ return NO;}
 }
 
-////////////// PERFORM OPERATION /////////////////////////////
-    - (double)performOperation:(NSString * ) operation
-    {
-        [self.programStack addObject:operation];
-        return [CalculatorBrain runProgram:self.program];
-    }
 
-////////////// program //////////////////////
-    - (id)program
-    {
-        return [self.programStack copy];
-    }
 
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack
 {
