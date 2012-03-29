@@ -85,6 +85,9 @@
     else{ return NO;}
 }
 
++(NSString *) removeTrailingComma:(NSString *)myString{
+    return [myString substringToIndex:([myString length]-2)];
+}
 
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack
 {
@@ -97,10 +100,12 @@
     if ([self is2Operation:topOfStack]){
         //parameter 2 = descriptionOfTopOfStack, remove ", "
         NSString * param2 = [self descriptionOfTopOfStack:stack];
+        param2 = [self removeTrailingComma:param2];
         //parameter 1 = descriptionOfTopOfStack, remove ", "
         NSString * param1 = [self descriptionOfTopOfStack:stack];
+        param1 = [self removeTrailingComma:param1];
         //result = (parameter 2 concat operation concat parameter 1)
-        result = [NSString stringWithFormat:@"%@%@%@",param1,topOfStack,param2];
+        result = [NSString stringWithFormat:@"%@%@%@%@%@",@"(",param1,topOfStack,param2,@")"];
     }
         
     //if 1 number operation then
