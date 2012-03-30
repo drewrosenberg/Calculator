@@ -14,6 +14,7 @@
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSDictionary * testVariableValues;
 @end
 
 @implementation CalculatorViewController
@@ -25,12 +26,18 @@
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
+@synthesize testVariableValues = _testVariableValues;
 
 //------- synthesize and init model ----------//
 @synthesize brain = _brain;
 - (CalculatorBrain *)brain{
     if (!_brain) _brain = [[CalculatorBrain alloc] init];
     return _brain;
+}
+
+-(NSDictionary *)testVariableValues{
+    _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:@"x",0,@"y",0,"z",0, nil];
+    return _testVariableValues;
 }
 
 //------- React to Buttons ------------------//
