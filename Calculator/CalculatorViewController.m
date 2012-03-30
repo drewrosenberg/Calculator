@@ -13,7 +13,7 @@
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
-@property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSArray * thisProgram;
 @property (nonatomic, strong) NSDictionary * testVariableValues;
 @end
 
@@ -27,13 +27,8 @@
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
 @synthesize testVariableValues = _testVariableValues;
-
+@synthesize thisProgram = _thisProgram;
 //------- synthesize and init model ----------//
-@synthesize brain = _brain;
-- (CalculatorBrain *)brain{
-    if (!_brain) _brain = [[CalculatorBrain alloc] init];
-    return _brain;
-}
 
 -(NSDictionary *)testVariableValues{
     _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -42,6 +37,11 @@
                            [NSNumber numberWithDouble:1.5],@"foo", 
                            nil];
     return _testVariableValues;
+}
+
+-(NSArray*) thisProgram{
+    if (_thisProgram == nil) _thisProgram = [[NSArray alloc] init];
+    return _thisProgram;
 }
 
 //------- React to Buttons ------------------//
@@ -77,11 +77,10 @@
     
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
 
-    [self.brain performOperation:operation];
+    self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
    
-    self.keylog.text = [CalculatorBrain descriptionOfProgram:_brain.program];
-
-    double result = [CalculatorBrain runProgram:_brain.program usingVariableValues:self.testVariableValues];
+    self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
 
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
   
@@ -90,11 +89,17 @@
 - (IBAction)variablePressed:(id)sender {
     NSString *variable = [sender currentTitle];
     self.display.text = variable;
-    [CalculatorBrain runProgram:[[self.brain program] arrayByAddingObject:variable] usingVariableValues:self.testVariableValues];
+    self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
 }
 
 - (IBAction)enterPressed {
-    [self.brain pushOperand:[self.display.text doubleValue]];
+    NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
+
+    self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
+    
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
+    
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;   
 }
@@ -104,7 +109,7 @@
     self.decimalPressed = NO;
     self.display.text = @"0";
     self.keylog.text = @"";
-    [self.brain clearOperands];
+    self.thisProgram = nil;
 }
 //---------------------------------------------
 
