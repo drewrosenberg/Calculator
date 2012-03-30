@@ -36,7 +36,11 @@
 }
 
 -(NSDictionary *)testVariableValues{
-    _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:@"x",0,@"y",0,"z",0, nil];
+    _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+                           [NSNumber numberWithDouble:2],@"x",
+                           [NSNumber numberWithDouble:3],@"y",
+                           [NSNumber numberWithDouble:1.5],@"foo", 
+                           nil];
     return _testVariableValues;
 }
 
@@ -73,13 +77,20 @@
     
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
 
-    double result = [self.brain performOperation:operation];
-
+    [self.brain performOperation:operation];
+   
     self.keylog.text = [CalculatorBrain descriptionOfProgram:_brain.program];
+
+    double result = [CalculatorBrain runProgram:_brain.program usingVariableValues:self.testVariableValues];
 
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
   
     self.display.text = resultString;
+}
+- (IBAction)variablePressed:(id)sender {
+    NSString *variable = [sender currentTitle];
+    self.display.text = variable;
+    [CalculatorBrain runProgram:[[self.brain program] arrayByAddingObject:variable] usingVariableValues:self.testVariableValues];
 }
 
 - (IBAction)enterPressed {
