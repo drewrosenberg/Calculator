@@ -128,6 +128,11 @@
         //result = descriptionofTopOfStack concat topOfStack
         result = [topOfStack stringValue];
     }
+    
+    else{
+        //must be a variable
+        result = topOfStack;
+    }
      
     //add ", " to the end
     result = [result stringByAppendingFormat:@", "];
