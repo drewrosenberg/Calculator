@@ -187,7 +187,7 @@
                 result = sqrt([self popOperandOffStack:stack]);
                 //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
             } else if ([@"Pi" isEqualToString:operation]){
-                result = 2*acos(0);
+                result = M_PI;
             }
         }
     }
