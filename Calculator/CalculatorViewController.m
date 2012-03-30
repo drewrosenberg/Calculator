@@ -32,9 +32,9 @@
 
 -(NSDictionary *)testVariableValues{
     _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
-                           [NSNumber numberWithDouble:2],@"x",
-                           [NSNumber numberWithDouble:3],@"y",
-                           [NSNumber numberWithDouble:1.5],@"foo", 
+                           [NSNumber numberWithDouble:0],@"x",
+                           [NSNumber numberWithDouble:0],@"y",
+                           [NSNumber numberWithDouble:0],@"foo", 
                            nil];
     return _testVariableValues;
 }
