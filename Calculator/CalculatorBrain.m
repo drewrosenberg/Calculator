@@ -214,7 +214,7 @@
     
     //---Go through program and replace all variables with their values
     //for index = 0 to number of objects in program
-    for (int index =0; index == [stack count]; index++){
+    for (int index=0; index != [stack count]; index++){
     //if object is a string   
        if ([[stack objectAtIndex:index] isKindOfClass:[NSString self]]){
     //if object is a variable
