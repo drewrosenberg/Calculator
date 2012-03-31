@@ -50,11 +50,22 @@
 /////// API Methods /////////////////
 + (NSSet *)variablesUsedInProgram:(id)program
 {
-    NSSet *result = nil;
+    //initialize set
+    NSSet *result = [NSSet set];
+    
+    id thisObject = nil; //object from program in focus
+    
+    //use introspection on program to make sure it is an array
     if ([program isKindOfClass:[NSArray self]]){
+        //go through program to find variables
         for (int index = 0;index < [program count]; index++){
-            if (![self isOperation:[program objectAtIndex:index]]){
-                result = [result setByAddingObject:[program objectAtIndex:index]];
+            thisObject = [program objectAtIndex:index];
+            //use introspection on thisObject to find strings
+            if ([thisObject isKindOfClass:[NSString self]]){
+                //if it is not an operation then it must be a variable
+                if (![self isOperation:[program objectAtIndex:index]]){
+                    result = [result setByAddingObject:[program objectAtIndex:index]];
+                }
             }
         }
     }
