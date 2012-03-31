@@ -81,6 +81,21 @@
     return _thisProgram;
 }
 
+-(void) refreshDisplays{
+    //refresh main display
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+
+    //refresh log
+    self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
+
+    //refresh variable display
+    self.variableDisplay.text = @"";
+    for (NSString * thisVariable in [CalculatorBrain variablesUsedInProgram:self.thisProgram]) {
+        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, thisVariable, [self.activeVariableValues objectForKey:thisVariable]];
+    }
+}
+
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
 
@@ -115,30 +130,37 @@
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
 
     self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-   
-    self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
 
-    NSString *resultString = [NSString stringWithFormat:@"%g", result];
-  
-    self.display.text = resultString;
+    [self refreshDisplays];
 }
 
+- (IBAction)undoPressed:(id)sender {
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        //remove last character and refresh display
+        if ([self.display.text length] != 0){
+            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
+        }
+    }
+    else {
+        //remove last object and refresh displays
+        NSMutableArray *mutableProgram;
+        mutableProgram = [self.thisProgram mutableCopy];
+        [mutableProgram removeObject:[mutableProgram lastObject]];
+        self.thisProgram = mutableProgram;
+        [self refreshDisplays];                
+    }
+}
 
 
 - (IBAction)variablePressed:(id)sender {
     NSString *variable = [sender currentTitle];
     self.display.text = variable;
-
-    //if the variable is not in the program, then add it to the display
-    if ( ![[CalculatorBrain variablesUsedInProgram:self.thisProgram] containsObject:variable])
-    {
-        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, variable, [self.activeVariableValues objectForKey:variable]];
-    }    
     
     //add the variable and run the program
     self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
     [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    
+    [self refreshDisplays];
 }
 
 - (IBAction)testButtonPressed:(id)sender {
@@ -147,11 +169,8 @@
     
     self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
     
-    //refresh variable display
-    self.variableDisplay.text = @"";
-    for (NSString * thisVariable in [CalculatorBrain variablesUsedInProgram:self.thisProgram]) {
-        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, thisVariable, [self.activeVariableValues objectForKey:thisVariable]];
-    }
+    [self refreshDisplays];
+
     //recaculate with new variables
     double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
     self.display.text = [NSString stringWithFormat:@"%g", result];
@@ -162,8 +181,9 @@
 
     self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
-    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    //[CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
     
+    [self refreshDisplays];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;   
 }

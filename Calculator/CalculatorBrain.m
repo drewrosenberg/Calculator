@@ -128,12 +128,6 @@
         result = [NSString stringWithFormat:@"%@(%@)",topOfStack,param];
     }
 
-
-    //if 0 number operation
-    else if ([self isOperation:topOfStack]){
-        result = topOfStack;
-    }
-    
     //if number
     else if ([topOfStack isKindOfClass:[NSNumber self]]){
         //result = descriptionofTopOfStack concat topOfStack
@@ -141,14 +135,13 @@
     }
     
     else{
-        //must be a variable
+        //must be a variable or 0 number operation
         result = topOfStack;
     }
      
     //add ", " to the end
     result = [result stringByAppendingFormat:@", "];
-    
-    NSLog(@"%@",result);
+    NSLog(@"result=%@\n", result);
     return result; 
 }
 
@@ -207,7 +200,6 @@
             }
         }
     }
-    
     return result;
 }
 
