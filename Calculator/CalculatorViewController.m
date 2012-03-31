@@ -14,7 +14,8 @@
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) NSArray * thisProgram;
-@property (nonatomic, strong) NSDictionary * testVariableValues;
+@property (nonatomic, strong) NSArray * testVariableValues;
+@property (nonatomic, strong) NSDictionary * activeVariableValues;
 @end
 
 @implementation CalculatorViewController
@@ -28,16 +29,46 @@
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
 @synthesize testVariableValues = _testVariableValues;
+@synthesize activeVariableValues = _activeVariableValues;
 @synthesize thisProgram = _thisProgram;
-//------- synthesize and init model ----------//
+//------- synthesize and init test variables and model ----------//
 
--(NSDictionary *)testVariableValues{
-    _testVariableValues = [NSDictionary dictionaryWithObjectsAndKeys:
+-(NSArray *)testVariableValues{
+    //test variable set 1 (active set)
+    _testVariableValues = [_testVariableValues arrayByAddingObject:
+                           [NSDictionary dictionaryWithObjectsAndKeys:
                            [NSNumber numberWithDouble:0],@"x",
                            [NSNumber numberWithDouble:0],@"y",
                            [NSNumber numberWithDouble:0],@"foo", 
-                           nil];
-    return _testVariableValues;
+                           nil]];
+    
+    //test variable set 2
+    _testVariableValues = [_testVariableValues arrayByAddingObject:
+                           [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithDouble:0],@"x",
+                            [NSNumber numberWithDouble:0],@"y",
+                            [NSNumber numberWithDouble:0],@"foo", 
+                            nil]];
+
+    //test variable set 3
+    _testVariableValues = [_testVariableValues arrayByAddingObject:
+                           [NSDictionary dictionaryWithObjectsAndKeys:
+                            [NSNumber numberWithDouble:0],@"x",
+                            [NSNumber numberWithDouble:0],@"y",
+                            [NSNumber numberWithDouble:0],@"foo", 
+                            nil]];
+
+
+        return _testVariableValues;
+}
+
+-(NSDictionary *) activeVariableValues{
+    //initialize to test1 button values
+    if (!_activeVariableValues){
+    _activeVariableValues = [self.testVariableValues objectAtIndex:0];
+    }
+    
+    return _activeVariableValues;
 }
 
 -(NSArray*) thisProgram{
@@ -79,7 +110,7 @@
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
 
     self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:[self.testVariableValues objectAtIndex:0]];
    
     self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
 
@@ -97,21 +128,27 @@
     //if the variable is not in the program, then add it to the display
     if ( ![[CalculatorBrain variablesUsedInProgram:self.thisProgram] containsObject:variable])
     {
-        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, variable, [self.testVariableValues objectForKey:variable]];
+        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, variable, [self.activeVariableValues objectForKey:variable]];
     }    
     
     //add the variable and run the program
     self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
-    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
 }
 
+- (IBAction)testButtonPressed:(id)sender {
+    NSString * testButton = [sender currentTitle];
+    int index = [[testButton substringFromIndex:[testButton length]] intValue];
+    
+    self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
+}
 
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
 
     self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
-    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
     
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;   
