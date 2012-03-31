@@ -115,7 +115,7 @@
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
 
     self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:[self.testVariableValues objectAtIndex:0]];
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
    
     self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
 
@@ -147,8 +147,15 @@
     
     self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
     
-    //----> still need to refresh variable display
-}
+    //refresh variable display
+    self.variableDisplay.text = @"";
+    for (NSString * thisVariable in [CalculatorBrain variablesUsedInProgram:self.thisProgram]) {
+        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, thisVariable, [self.activeVariableValues objectForKey:thisVariable]];
+    }
+    //recaculate with new variables
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+} 
 
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
