@@ -34,38 +34,43 @@
 //------- synthesize and init test variables and model ----------//
 
 -(NSArray *)testVariableValues{
-    //test variable set 1 (active set)
-    _testVariableValues = [_testVariableValues arrayByAddingObject:
-                           [NSDictionary dictionaryWithObjectsAndKeys:
-                           [NSNumber numberWithDouble:0],@"x",
-                           [NSNumber numberWithDouble:0],@"y",
-                           [NSNumber numberWithDouble:0],@"foo", 
-                           nil]];
-    
-    //test variable set 2
-    _testVariableValues = [_testVariableValues arrayByAddingObject:
-                           [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNumber numberWithDouble:0],@"x",
-                            [NSNumber numberWithDouble:0],@"y",
-                            [NSNumber numberWithDouble:0],@"foo", 
-                            nil]];
+    if (_testVariableValues == nil)
+    {
+        _testVariableValues = [[NSArray alloc] init];
+        
+        //test variable set 1 (active set)
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:0],@"x",
+                                [NSNumber numberWithDouble:0],@"y",
+                                [NSNumber numberWithDouble:0],@"foo", 
+                                nil]];
+        
+        //test variable set 2
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:1],@"x",
+                                [NSNumber numberWithDouble:1],@"y",
+                                [NSNumber numberWithDouble:1],@"foo", 
+                                nil]];
+        
+        //test variable set 3
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:2],@"x",
+                                [NSNumber numberWithDouble:2],@"y",
+                                [NSNumber numberWithDouble:2],@"foo", 
+                                nil]];
+   
+    }
 
-    //test variable set 3
-    _testVariableValues = [_testVariableValues arrayByAddingObject:
-                           [NSDictionary dictionaryWithObjectsAndKeys:
-                            [NSNumber numberWithDouble:0],@"x",
-                            [NSNumber numberWithDouble:0],@"y",
-                            [NSNumber numberWithDouble:0],@"foo", 
-                            nil]];
-
-
-        return _testVariableValues;
+    return _testVariableValues;
 }
 
 -(NSDictionary *) activeVariableValues{
     //initialize to test1 button values
     if (!_activeVariableValues){
-    _activeVariableValues = [self.testVariableValues objectAtIndex:0];
+        _activeVariableValues = [self.testVariableValues objectAtIndex:0];
     }
     
     return _activeVariableValues;
@@ -138,9 +143,11 @@
 
 - (IBAction)testButtonPressed:(id)sender {
     NSString * testButton = [sender currentTitle];
-    int index = [[testButton substringFromIndex:[testButton length]] intValue];
+    int index = [[testButton substringFromIndex:[testButton length]-1] intValue];
     
     self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
+    
+    //----> still need to refresh variable display
 }
 
 - (IBAction)enterPressed {
