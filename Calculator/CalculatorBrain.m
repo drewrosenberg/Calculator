@@ -52,7 +52,7 @@
 {
     NSSet *result = nil;
     if ([program isKindOfClass:[NSArray self]]){
-        for (int index = 0;index == [program count]; index++){
+        for (int index = 0;index < [program count]; index++){
             if (![self isOperation:[program objectAtIndex:index]]){
                 result = [result setByAddingObject:[program objectAtIndex:index]];
             }

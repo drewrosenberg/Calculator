@@ -22,6 +22,7 @@
 //----- synthesize displays ---------//
 @synthesize display = _display; 
 @synthesize keylog = _keylog;
+@synthesize variableDisplay = _variableDisplay;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -86,12 +87,24 @@
   
     self.display.text = resultString;
 }
+
+
+
 - (IBAction)variablePressed:(id)sender {
     NSString *variable = [sender currentTitle];
     self.display.text = variable;
+
+    //if the variable is not in the program, then add it to the display
+    if ( ![[CalculatorBrain variablesUsedInProgram:self.thisProgram] containsObject:variable])
+    {
+        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, variable, [self.testVariableValues objectForKey:variable]];
+    }    
+    
+    //add the variable and run the program
     self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
     [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.testVariableValues];
 }
+
 
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
@@ -109,6 +122,7 @@
     self.decimalPressed = NO;
     self.display.text = @"0";
     self.keylog.text = @"";
+    self.variableDisplay.text = @"";
     self.thisProgram = nil;
 }
 //---------------------------------------------
@@ -116,6 +130,7 @@
 - (void)viewDidUnload {
     [self setDisplay:nil];
     [self setKeylog:nil];
+    [self setVariableDisplay:nil];
     [super viewDidUnload];
 }
 @end
