@@ -111,12 +111,18 @@
     if ([self is2Operation:topOfStack]){
         //parameter 2 = descriptionOfTopOfStack, remove ", "
         NSString * param2 = [self descriptionOfTopOfStack:stack];
-        param2 = [self removeTrailingComma:param2];
+   //     param2 = [self removeTrailingComma:param2];
         //parameter 1 = descriptionOfTopOfStack, remove ", "
+        NSLog(@"param2=%@",param2);
+        
         NSString * param1 = [self descriptionOfTopOfStack:stack];
-        param1 = [self removeTrailingComma:param1];
+  //      param1 = [self removeTrailingComma:param1];
+        NSLog(@"param1=%@",param1);
         //result = (parameter 2 concat operation concat parameter 1)
+        
+        
         result = [NSString stringWithFormat:@"(%@%@%@)",param1,topOfStack,param2];
+        NSLog(@"result=%@",result);
     }
         
     //if 1 number operation then
@@ -124,7 +130,7 @@
         //result = operation concat ( concat descriptionofTopOfStack concat )
         NSString * param = [self descriptionOfTopOfStack:stack];
         //remove ", "
-        param = [self removeTrailingComma:param];
+//        param = [self removeTrailingComma:param];
         result = [NSString stringWithFormat:@"%@(%@)",topOfStack,param];
     }
 
@@ -139,9 +145,18 @@
         result = topOfStack;
     }
      
-    //add ", " to the end
-    result = [result stringByAppendingFormat:@", "];
+/*    //add ", " to the end
+    
+    if ([stack lastObject]){
+        result = [NSString stringWithFormat:@"%@%@, ", [self descriptionOfTopOfStack:stack], result];
+    }
+    else{
+        result = [result stringByAppendingFormat:@", "];
+    }
+    
     NSLog(@"result=%@\n", result);
+*/
+    
     return result; 
 }
 
@@ -152,7 +167,13 @@
         if ([program isKindOfClass:[NSArray self]]){
             stack = [program mutableCopy];
         }
-        return [self removeTrailingComma:[self descriptionOfTopOfStack:stack]];
+        NSString *result = [self descriptionOfTopOfStack:stack];
+        
+        while ([stack lastObject]) {
+            result = [NSString stringWithFormat:@"%@, %@",[self descriptionOfTopOfStack:stack],result];
+        }
+
+        return result;
     }
 
 
