@@ -33,6 +33,12 @@
 @synthesize thisProgram = _thisProgram;
 //------- synthesize and init test variables and model ----------//
 
+/* just playing around with rotation
+ -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
+    return YES;
+}
+*/ 
+ 
 -(NSArray *)testVariableValues{
     if (_testVariableValues == nil)
     {
