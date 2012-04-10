@@ -23,7 +23,6 @@
 //----- synthesize displays ---------//
 @synthesize display = _display; 
 @synthesize keylog = _keylog;
-@synthesize variableDisplay = _variableDisplay;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -94,12 +93,6 @@
 
     //refresh log
     self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
-
-    //refresh variable display
-    self.variableDisplay.text = @"";
-    for (NSString * thisVariable in [CalculatorBrain variablesUsedInProgram:self.thisProgram]) {
-        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, thisVariable, [self.activeVariableValues objectForKey:thisVariable]];
-    }
 }
 
 //------- React to Buttons ------------------//
@@ -169,19 +162,6 @@
     [self refreshDisplays];
 }
 
-- (IBAction)testButtonPressed:(id)sender {
-    NSString * testButton = [sender currentTitle];
-    int index = [[testButton substringFromIndex:[testButton length]-1] intValue];
-    
-    self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
-    
-    [self refreshDisplays];
-
-    //recaculate with new variables
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-    self.display.text = [NSString stringWithFormat:@"%g", result];
-} 
-
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
 
@@ -199,7 +179,6 @@
     self.decimalPressed = NO;
     self.display.text = @"0";
     self.keylog.text = @"";
-    self.variableDisplay.text = @"";
     self.thisProgram = nil;
 }
 //---------------------------------------------
@@ -207,7 +186,6 @@
 - (void)viewDidUnload {
     [self setDisplay:nil];
     [self setKeylog:nil];
-    [self setVariableDisplay:nil];
     [super viewDidUnload];
 }
 @end

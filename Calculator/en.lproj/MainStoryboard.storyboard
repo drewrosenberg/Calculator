@@ -388,7 +388,6 @@
                     <connections>
                         <outlet property="display" destination="YMm-Dh-rJb" id="wWA-yk-fpI"/>
                         <outlet property="keylog" destination="aoL-fl-46T" id="TtA-Zs-fca"/>
-                        <outlet property="variableDisplay" destination="E2G-SG-LQ1" id="7Y4-bw-CbC"/>
                     </connections>
                 </viewController>
             </objects>
@@ -419,7 +418,6 @@
             <relationships>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="keylog" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="variableDisplay" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>
