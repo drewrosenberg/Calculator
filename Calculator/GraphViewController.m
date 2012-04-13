@@ -9,10 +9,12 @@
 #import "GraphViewController.h"
 
 @interface GraphViewController ()
-
+@property NSString * equation;
 @end
 
 @implementation GraphViewController
+
+@synthesize equation = _equation;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
