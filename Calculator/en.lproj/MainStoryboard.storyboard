@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="xGR-HC-BwG">
     <dependencies>
-        <deployment defaultVersion="1296" identifier="iOS"/>
         <development defaultVersion="4200" identifier="xcode"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
     </dependencies>
@@ -408,11 +407,11 @@
             </objects>
             <point key="canvasLocation" x="160" y="27"/>
         </scene>
-        <!--View Controller-->
+        <!--Graph View Controller-->
         <scene sceneID="0ER-Sg-iD2">
             <objects>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dyC-r8-TV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="vx0-2Q-OdI" sceneMemberID="viewController">
+                <viewController id="vx0-2Q-OdI" customClass="GraphViewController" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9ZW-rp-B3d">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -456,6 +455,9 @@
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="keylog" candidateClass="UILabel"/>
             </relationships>
+        </class>
+        <class className="GraphViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/GraphViewController.h"/>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
