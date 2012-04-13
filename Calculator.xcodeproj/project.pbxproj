@@ -17,11 +17,10 @@
 		46881EA5150C37B000D8EF78 /* MainStoryboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46881EA3150C37B000D8EF78 /* MainStoryboard.storyboard */; };
 		46881EA8150C37B000D8EF78 /* CalculatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 46881EA7150C37B000D8EF78 /* CalculatorViewController.m */; };
 		46C00BEE1522451400376CD5 /* README in Resources */ = {isa = PBXBuildFile; fileRef = 46C00BED1522451400376CD5 /* README */; };
+		46C812D01537E4D900A1A34E /* AxesDrawer.m in Sources */ = {isa = PBXBuildFile; fileRef = 46C812CF1537E4D900A1A34E /* AxesDrawer.m */; };
 		46DF85A8152BC3CE0073F296 /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A2152BC3CE0073F296 /* Icon-72.png */; };
 		46DF85A9152BC3CE0073F296 /* Icon-Small-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A3152BC3CE0073F296 /* Icon-Small-50.png */; };
 		46DF85AA152BC3CE0073F296 /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A4152BC3CE0073F296 /* Icon-Small@2x.png */; };
-		46DF85AB152BC3CE0073F296 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A5152BC3CE0073F296 /* Icon.png */; };
-		46DF85AC152BC3CE0073F296 /* Icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A6152BC3CE0073F296 /* Icon@2x.png */; };
 		46DF85AD152BC3CE0073F296 /* iTunesArtwork in Resources */ = {isa = PBXBuildFile; fileRef = 46DF85A7152BC3CE0073F296 /* iTunesArtwork */; };
 /* End PBXBuildFile section */
 
@@ -42,6 +41,8 @@
 		46881EA6150C37B000D8EF78 /* CalculatorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CalculatorViewController.h; sourceTree = "<group>"; };
 		46881EA7150C37B000D8EF78 /* CalculatorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CalculatorViewController.m; sourceTree = "<group>"; };
 		46C00BED1522451400376CD5 /* README */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README; sourceTree = "<group>"; };
+		46C812CE1537E4D900A1A34E /* AxesDrawer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AxesDrawer.h; sourceTree = "<group>"; };
+		46C812CF1537E4D900A1A34E /* AxesDrawer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AxesDrawer.m; sourceTree = "<group>"; };
 		46DF85A2152BC3CE0073F296 /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		46DF85A3152BC3CE0073F296 /* Icon-Small-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small-50.png"; sourceTree = "<group>"; };
 		46DF85A4152BC3CE0073F296 /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
@@ -97,6 +98,8 @@
 			children = (
 				467F81F91515A734004DE43B /* CalculatorBrain.m */,
 				467F81F81515A727004DE43B /* CalculatorBrain.h */,
+				46C812CE1537E4D900A1A34E /* AxesDrawer.h */,
+				46C812CF1537E4D900A1A34E /* AxesDrawer.m */,
 				46881EA0150C37B000D8EF78 /* CalculatorAppDelegate.h */,
 				46881EA1150C37B000D8EF78 /* CalculatorAppDelegate.m */,
 				46881EA3150C37B000D8EF78 /* MainStoryboard.storyboard */,
@@ -189,8 +192,6 @@
 				46DF85A8152BC3CE0073F296 /* Icon-72.png in Resources */,
 				46DF85A9152BC3CE0073F296 /* Icon-Small-50.png in Resources */,
 				46DF85AA152BC3CE0073F296 /* Icon-Small@2x.png in Resources */,
-				46DF85AB152BC3CE0073F296 /* Icon.png in Resources */,
-				46DF85AC152BC3CE0073F296 /* Icon@2x.png in Resources */,
 				46DF85AD152BC3CE0073F296 /* iTunesArtwork in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -206,6 +207,7 @@
 				46881EA2150C37B000D8EF78 /* CalculatorAppDelegate.m in Sources */,
 				46881EA8150C37B000D8EF78 /* CalculatorViewController.m in Sources */,
 				467F81FA1515A734004DE43B /* CalculatorBrain.m in Sources */,
+				46C812D01537E4D900A1A34E /* AxesDrawer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
