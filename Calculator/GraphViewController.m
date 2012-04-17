@@ -10,14 +10,20 @@
 #import "GraphView.h"
 
 @interface GraphViewController ()
-@property (weak, nonatomic) IBOutlet GraphView *graph;
-@property NSString * equation;
+@property (weak, nonatomic) IBOutlet GraphView *graphView;
+@property (nonatomic, strong) NSArray * graphProgram;
 @end
 
 @implementation GraphViewController
+@synthesize graphProgram = _graphProgram;
+@synthesize graphView = _graphView;
 
-@synthesize graph = _graph;
-@synthesize equation = _equation;
+-(NSArray*) graphProgram{
+    if (_graphProgram == nil){
+        _graphProgram = [[NSArray alloc] init];
+    }
+    return _graphProgram;
+}
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
