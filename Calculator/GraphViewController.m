@@ -11,7 +11,6 @@
 
 @interface GraphViewController ()
 @property (weak, nonatomic) IBOutlet GraphView *graphView;
-@property (nonatomic, strong) NSArray * graphProgram;
 @end
 
 @implementation GraphViewController
@@ -23,6 +22,11 @@
         _graphProgram = [[NSArray alloc] init];
     }
     return _graphProgram;
+}
+
+-(void) setGraphProgram:(NSArray *)graphProgram{
+    _graphProgram = graphProgram;
+    [self.graphView setNeedsDisplay];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
