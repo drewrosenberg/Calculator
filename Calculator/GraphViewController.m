@@ -8,14 +8,17 @@
 
 #import "GraphViewController.h"
 #import "GraphView.h"
+#include "CalculatorBrain.h"
 
 @interface GraphViewController ()
 @property (weak, nonatomic) IBOutlet GraphView *graphView;
+@property (weak, nonatomic) NSArray * graphPoints;
 @end
 
 @implementation GraphViewController
 @synthesize graphProgram = _graphProgram;
 @synthesize graphView = _graphView;
+@synthesize graphPoints = _graphPoints;
 
 -(NSArray*) graphProgram{
     if (_graphProgram == nil){
@@ -26,6 +29,8 @@
 
 -(void) setGraphProgram:(NSArray *)graphProgram{
     _graphProgram = graphProgram;
+    //load graphPoints with the results of 
+    //[calculatorbrain runProgram:graphProgram usingVariables:x=?].  Loop for x
     [self.graphView setNeedsDisplay];
 }
 
