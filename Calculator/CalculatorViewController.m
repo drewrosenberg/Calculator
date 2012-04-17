@@ -8,6 +8,7 @@
 
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
+#import "GraphViewController.h"
 
 
 @interface CalculatorViewController()
@@ -181,6 +182,15 @@
     self.keylog.text = @"";
     self.thisProgram = nil;
 }
+
+//----- Graph button ------
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+    if (segue.identifier == @"Graph"){
+        //graph segue preparation
+    }
+        
+}
+
 //---------------------------------------------
 
 - (void)viewDidUnload {

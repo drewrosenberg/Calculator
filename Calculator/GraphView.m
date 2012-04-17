@@ -29,6 +29,7 @@
     origin.x = rect.size.width / 2;
     origin.y = rect.size.height / 2;
     [AxesDrawer drawAxesInRect:rect originAtPoint:origin scale:10];
+
 }
 
 
