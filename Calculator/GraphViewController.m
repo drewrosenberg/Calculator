@@ -24,21 +24,30 @@
     [self.graphView setNeedsDisplay];
 }
 
-- (NSArray *)graphData:(GraphView *)sender{
+- (NSArray *)graphData:(GraphView *)sender
+                InRect: (CGRect)rect
+         originAtPoint: (CGPoint) origin
+             withScale: (CGFloat) pointsPerUnit
+{
     NSArray * points = [[NSArray alloc] init];
     
-    //same thing - need to change 320 to view width
-    for (int index = 0; index <=320; index++) {  
-        NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:index] forKey:@"x"];
-
+    CGFloat xmin = -(origin.x/pointsPerUnit);
+    CGFloat xmax = (rect.size.width-origin.x)/pointsPerUnit;
+    CGFloat xstep = (xmax-xmin)/rect.size.width;
+    
+    for (CGFloat x = xmin; x <=xmax; x+=xstep) {  
+        
+        NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
+        float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
+        
         //still need to match the axis labels
         points = 
             [points arrayByAddingObject:
              [NSValue valueWithCGPoint:
                 CGPointMake(
-                    index, 
-                    [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables]
-                    )
+                    origin.x + x*pointsPerUnit, 
+                    origin.y + y*pointsPerUnit
+                )
               ]
             ];
     }
