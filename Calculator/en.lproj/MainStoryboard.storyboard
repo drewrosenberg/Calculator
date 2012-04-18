@@ -393,7 +393,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="vx0-2Q-OdI" kind="push" identifier="Graph" id="CHc-0Q-FJG"/>
+                                    <segue destination="cEA-Ei-Tac" kind="push" id="iUZ-2z-Aq3"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -409,15 +409,15 @@
             <point key="canvasLocation" x="160" y="27"/>
         </scene>
         <!--Graph View Controller-->
-        <scene sceneID="0ER-Sg-iD2">
+        <scene sceneID="Y2N-9X-N5a">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dyC-r8-TV2" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <viewController id="vx0-2Q-OdI" customClass="GraphViewController" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="9ZW-rp-B3d">
+                <placeholder placeholderIdentifier="IBFirstResponder" id="q6v-ha-axo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="cEA-Ei-Tac" customClass="GraphViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bi6-g6-LVm">
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" id="Yg6-w6-mTx" customClass="GraphView">
+                            <view contentMode="scaleToFill" id="eQg-M5-8CT" customClass="GraphView">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="416"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -425,14 +425,13 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="ksH-Mw-Ka4"/>
+                    <navigationItem key="navigationItem" id="UlC-3E-omt"/>
                     <connections>
-                        <outlet property="graph" destination="Yg6-w6-mTx" id="HOC-DE-yFP"/>
-                        <outlet property="myGraph" destination="Yg6-w6-mTx" id="qr7-D9-2qw"/>
+                        <outlet property="graphView" destination="eQg-M5-8CT" id="mWB-oe-ZnD"/>
                     </connections>
                 </viewController>
             </objects>
-            <point key="canvasLocation" x="558" y="28"/>
+            <point key="canvasLocation" x="556" y="17"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="wHl-y3-dkM">

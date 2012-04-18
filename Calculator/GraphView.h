@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GraphView : UIView
+@class GraphView;
 
+@protocol GraphViewDataSource
+-(CGPoint *) graphData:(GraphView *) sender; //array of NSValues NSValueWithCGPoint
+@end
+
+@interface GraphView : UIView
+@property (nonatomic, weak) IBOutlet id <GraphViewDataSource> dataSource;
 @end

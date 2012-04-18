@@ -9,5 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface GraphViewController : UIViewController
-@property (nonatomic, strong) NSArray * graphProgram;
 @end
