@@ -31,6 +31,7 @@
     for (int index = 0; index <=320; index++) {    
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:index] forKey:@"x"];
         //rough in fake data for now...will replace with calculator program results
+        //also need to match the axis labels
         points[index].x = index;
         points[index].y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
         NSLog(@"x=%@, y=%@\n",[NSNumber numberWithInt:index],[NSNumber numberWithDouble:points[index].y]);

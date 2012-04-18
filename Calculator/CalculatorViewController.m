@@ -185,7 +185,7 @@
 
 //----- Graph button ------
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
-    if (segue.identifier == @"Graph"){
+    if ([segue.identifier isEqualToString:@"Graph"]){
         //graph segue preparation
         [segue.destinationViewController setGraphProgram:self.thisProgram];
     }
