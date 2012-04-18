@@ -16,23 +16,11 @@
 
 @implementation GraphViewController
 @synthesize graphView = _graphView;
+@synthesize graphProgram = _graphProgram;
 
 -(void) setGraphView:(GraphView*)graphView{
-    //load graphPoints with the results of 
-    //[calculatorbrain runProgram:graphProgram usingVariables:x=?].  Loop for x
-
- /*   for (double xValue=-10; xValue==10; xValue+=.01) {
-        NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:xValue] forKey:@"x"];
-        double yValue = [CalculatorBrain runProgram:graphProgram usingVariableValues:variables];
-        CGPoint graphPoint;
-        graphPoint.x = xValue;
-        graphPoint.y = yValue;
-        self.graphPoints = [self.graphPoints arrayByAddingObject:graphPoint];
-    }*/
     _graphView = graphView;
     self.graphView.dataSource = self;
-    [self.graphView setNeedsDisplay];
-
 }
 
 - (CGPoint *)graphData:(GraphView *)sender{
@@ -41,9 +29,11 @@
     
     //same thing - need to change 320 to view width
     for (int index = 0; index <=320; index++) {    
-    //rough in fake data for now...will replace with calculator program results
+        NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:index] forKey:@"x"];
+        //rough in fake data for now...will replace with calculator program results
         points[index].x = index;
-        points[index].y = index;
+        points[index].y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
+        NSLog(@"x=%@, y=%@\n",[NSNumber numberWithInt:index],[NSNumber numberWithDouble:points[index].y]);
     }
     return(points);
 }

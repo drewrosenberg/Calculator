@@ -184,13 +184,13 @@
 }
 
 //----- Graph button ------
-/*-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
+- (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if (segue.identifier == @"Graph"){
         //graph segue preparation
-     //   [segue.destinationViewController setGraphProgram:self.thisProgram];
+        [segue.destinationViewController setGraphProgram:self.thisProgram];
     }
         
-}*/
+}
 
 //---------------------------------------------
 

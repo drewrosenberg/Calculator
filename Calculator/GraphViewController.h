@@ -9,4 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface GraphViewController : UIViewController
+@property id graphProgram;
 @end
