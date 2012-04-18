@@ -21,20 +21,26 @@
 -(void) setGraphView:(GraphView*)graphView{
     _graphView = graphView;
     self.graphView.dataSource = self;
+    [self.graphView setNeedsDisplay];
 }
 
-- (CGPoint *)graphData:(GraphView *)sender{
-    //allocate memory for CGPoint array (will change 320 to view width later
-    CGPoint * points = (CGPoint*)malloc(320*sizeof(CGPoint));
+- (NSArray *)graphData:(GraphView *)sender{
+    NSArray * points = [[NSArray alloc] init];
     
     //same thing - need to change 320 to view width
-    for (int index = 0; index <=320; index++) {    
+    for (int index = 0; index <=320; index++) {  
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:index] forKey:@"x"];
-        //rough in fake data for now...will replace with calculator program results
-        //also need to match the axis labels
-        points[index].x = index;
-        points[index].y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
-        NSLog(@"x=%@, y=%@\n",[NSNumber numberWithInt:index],[NSNumber numberWithDouble:points[index].y]);
+
+        //still need to match the axis labels
+        points = 
+            [points arrayByAddingObject:
+             [NSValue valueWithCGPoint:
+                CGPointMake(
+                    index, 
+                    [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables]
+                    )
+              ]
+            ];
     }
     return(points);
 }

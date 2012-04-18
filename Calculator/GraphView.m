@@ -52,7 +52,14 @@
     CGContextMoveToPoint(context, origin.x, rect.origin.y);
 
     //put graph points from controller on screen and draw lines between them
-    CGContextAddLines(context, [self.dataSource graphData:self], rect.size.width);
+    NSArray *pointsArray = [self.dataSource graphData:self];
+    int pointCount = [pointsArray count];
+    CGPoint * points = malloc(pointCount*sizeof(CGPoint));
+    for (int i=0; i<pointCount; i++) {
+        points[i] = [[pointsArray objectAtIndex:i] CGPointValue];
+    }
+    CGContextAddLines(context, points, rect.size.width);
+    free(points);
     
     CGContextStrokePath(context);
     UIGraphicsPopContext();

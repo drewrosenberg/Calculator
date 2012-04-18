@@ -11,7 +11,7 @@
 @class GraphView;
 
 @protocol GraphViewDataSource
--(CGPoint *) graphData:(GraphView *) sender; //array of NSValues NSValueWithCGPoint
+-(NSArray *) graphData:(GraphView *) sender; //array of NSValues NSValueWithCGPoint
 @end
 
 @interface GraphView : UIView
