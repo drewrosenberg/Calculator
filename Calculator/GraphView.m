@@ -81,7 +81,7 @@
     //Draw Axes
     [AxesDrawer drawAxesInRect:rect originAtPoint:origin scale:self.viewScale];
     
-    [self drawGraph:context InRect:rect originatPoint:origin scale:self.viewScale];
+    [self drawGraph:context InRect:rect originatPoint:origin scale:self.viewScale];    
 }
 
 

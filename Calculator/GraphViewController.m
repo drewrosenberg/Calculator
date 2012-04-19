@@ -51,6 +51,13 @@
               ]
             ];
     }
+    
+    NSString *programDescription = [CalculatorBrain descriptionOfProgram:self.graphProgram];
+
+    //add description of program to graph view
+    UIFont *font = [UIFont systemFontOfSize:12.0];
+    [programDescription drawInRect:rect withFont:font];
+    
     return(points);
 }
 
