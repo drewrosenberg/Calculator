@@ -12,14 +12,16 @@
 
 @protocol GraphViewDataSource
 -(NSArray *) graphData:(GraphView *) sender
-                InRect: (CGRect)
-    rect originAtPoint: (CGPoint) 
-    origin withScale: (CGFloat) pointsPerUnit;
+                InRect: (CGRect)rect;
 //array of NSValues NSValueWithCGPoint
 @end
 
 @interface GraphView : UIView
 @property (nonatomic, weak) IBOutlet id <GraphViewDataSource> dataSource;
 @property (nonatomic) CGFloat viewScale;
+@property (nonatomic) CGPoint origin;
+
 -(void)pinch:(UIPinchGestureRecognizer *)gesture;
+-(void)pan:(UIPanGestureRecognizer *)gesture;
+-(void)trippleTap:(UITapGestureRecognizer *)gesture;
 @end

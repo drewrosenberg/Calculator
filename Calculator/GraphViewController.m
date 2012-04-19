@@ -21,18 +21,19 @@
 -(void) setGraphView:(GraphView*)graphView{
     _graphView = graphView;
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
+    [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pan:)]];
+    [self.graphView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(trippleTap:)]];
     self.graphView.dataSource = self;
 }
 
 - (NSArray *)graphData:(GraphView *)sender
                 InRect: (CGRect)rect
-         originAtPoint: (CGPoint) origin
-             withScale: (CGFloat) pointsPerUnit
 {
     NSArray * points = [[NSArray alloc] init];
+    CGFloat pointsPerUnit = self.graphView.viewScale;
     
-    CGFloat xmin = -(origin.x/pointsPerUnit);
-    CGFloat xmax = (rect.size.width-origin.x)/pointsPerUnit;
+    CGFloat xmin = -(self.graphView.origin.x/pointsPerUnit);
+    CGFloat xmax = (rect.size.width-self.graphView.origin.x)/pointsPerUnit;
     CGFloat xstep = (xmax-xmin)/rect.size.width;
     
     for (CGFloat x = xmin; x <=xmax; x+=xstep) {  
@@ -44,12 +45,8 @@
         points = 
             [points arrayByAddingObject:
              [NSValue valueWithCGPoint:
-                CGPointMake(
-                    origin.x + x*pointsPerUnit, 
-                    origin.y + y*pointsPerUnit
-                )
-              ]
-            ];
+                CGPointMake(self.graphView.origin.x + x*pointsPerUnit,
+                            self.graphView.origin.y + y*pointsPerUnit)]];
         }
     }
     
