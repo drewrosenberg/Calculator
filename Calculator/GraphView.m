@@ -27,6 +27,14 @@
     }
 }
 
+-(void) setViewScale:(CGFloat)viewScale
+{
+    if (viewScale != _viewScale){
+        _viewScale = viewScale;
+        [self setNeedsDisplay];
+    }
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -43,6 +51,15 @@
 
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
+
+-(void)pinch:(UIPinchGestureRecognizer *)gesture
+{
+    if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded))
+    {
+        self.viewScale *= gesture.scale;
+        gesture.scale = 1;
+    }
+}
 
 - (void)drawGraph:(CGContextRef) context
         InRect:(CGRect) bounds

@@ -21,4 +21,5 @@
 @interface GraphView : UIView
 @property (nonatomic, weak) IBOutlet id <GraphViewDataSource> dataSource;
 @property (nonatomic) CGFloat viewScale;
+-(void)pinch:(UIPinchGestureRecognizer *)gesture;
 @end
