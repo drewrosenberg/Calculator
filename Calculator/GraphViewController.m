@@ -39,7 +39,7 @@
         
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
         float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
-        
+        if (y){
         //still need to match the axis labels
         points = 
             [points arrayByAddingObject:
@@ -50,6 +50,7 @@
                 )
               ]
             ];
+        }
     }
     
     NSString *programDescription = [CalculatorBrain descriptionOfProgram:self.graphProgram];
