@@ -59,17 +59,13 @@
     CGContextMoveToPoint(context, 
                 [[pointsArray objectAtIndex:0]CGPointValue].x, 
                 [[pointsArray objectAtIndex:0]CGPointValue].y);
-
+    
     int pointCount = [pointsArray count];
     //put graph points from controller on screen and draw lines between them
-    CGPoint * points = malloc(pointCount*sizeof(CGPoint));
     for (int i=0; i<pointCount; i++) {
-        points[i] = [[pointsArray objectAtIndex:i] CGPointValue];
-        //NSLog(@"x=%@, y=%@", points[i].x, points[i].y);
+        CGContextAddLineToPoint(context, [[pointsArray objectAtIndex:i] CGPointValue].x, [[pointsArray objectAtIndex:i] CGPointValue].y);
     }
-    CGContextAddLines(context, points, bounds.size.height);
-    free(points);
-    
+   
     CGContextStrokePath(context);
     UIGraphicsPopContext();
 }
@@ -78,11 +74,12 @@
     //get context
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    //Draw Axes
     CGPoint origin;
     origin.x = rect.size.width / 2;
     origin.y = rect.size.height / 2;
-    [AxesDrawer drawAxesInRect:rect originAtPoint:origin scale:10];
+
+    //Draw Axes
+    [AxesDrawer drawAxesInRect:rect originAtPoint:origin scale:self.viewScale];
     
     [self drawGraph:context InRect:rect originatPoint:origin scale:self.viewScale];
 }
