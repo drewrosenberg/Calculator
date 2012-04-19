@@ -202,7 +202,7 @@
                 /////////////////////////////////////////////////////
             } else if ([@"/" isEqualToString:operation]) {
                 result = [self popOperandOffStack:stack]; //make result divisor
-                result = [self popOperandOffStack:stack]; // result;
+                result = [self popOperandOffStack:stack]/result; // result;
                 //-------------------------------------------------//
             } else if ([@"-" isEqualToString:operation]) {
                 result = (0 - [self popOperandOffStack:stack])+ [self popOperandOffStack:stack];
