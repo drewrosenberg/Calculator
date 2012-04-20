@@ -23,7 +23,6 @@
 
 //----- synthesize displays ---------//
 @synthesize display = _display; 
-@synthesize keylog = _keylog;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -33,12 +32,16 @@
 @synthesize thisProgram = _thisProgram;
 //------- synthesize and init test variables and model ----------//
 
-// just playing around with rotation
- -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
-     if ((orientation == UIInterfaceOrientationPortrait) || (orientation == UIInterfaceOrientationPortraitUpsideDown)){
-         return NO;
-     }
+-(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
+    if (!self.splitViewController){
+        return NO;
+    }
+    else{
+        if ((orientation == UIInterfaceOrientationPortrait) || (orientation == UIInterfaceOrientationPortraitUpsideDown)){
+            return NO;
+        }
      return YES;
+    }
 }
 
 -(void) awakeFromNib
@@ -123,8 +126,12 @@
     self.display.text = [NSString stringWithFormat:@"%g", result];
 
     //refresh log
-    self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
-    
+    if ([self.thisProgram count] == 0) {
+        self.title = @"Drew's Calculator";
+    }else{
+        self.title = [CalculatorBrain descriptionOfProgram:self.thisProgram];
+    }
+
     //if ipad refresh graph
     if ([self splitViewGraphViewController]){
         [[self splitViewGraphViewController] setGraphProgram:self.thisProgram];
@@ -216,7 +223,6 @@
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
     self.display.text = @"0";
-    self.keylog.text = @"";
     self.thisProgram = nil;
     [self refreshDisplays];
 }
@@ -243,7 +249,6 @@
 
 - (void)viewDidUnload {
     [self setDisplay:nil];
-    [self setKeylog:nil];
     [super viewDidUnload];
 }
 @end

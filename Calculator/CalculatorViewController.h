@@ -10,5 +10,4 @@
 
 @interface CalculatorViewController : UIViewController <UISplitViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UILabel *display;
-@property (weak, nonatomic) IBOutlet UILabel *keylog;
 @end
