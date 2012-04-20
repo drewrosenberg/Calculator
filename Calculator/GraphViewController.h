@@ -9,5 +9,6 @@
 #import <UIKit/UIKit.h>
 
 @interface GraphViewController : UIViewController
-@property id graphProgram;
+@property (weak, nonatomic) id graphProgram;
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @end

@@ -17,13 +17,22 @@
 @implementation GraphViewController
 @synthesize graphView = _graphView;
 @synthesize graphProgram = _graphProgram;
-
+@synthesize toolbar = _toolbar;
+    
 -(void) setGraphView:(GraphView*)graphView{
     _graphView = graphView;
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
     [self.graphView addGestureRecognizer:[[UIPanGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pan:)]];
     [self.graphView addGestureRecognizer:[[UITapGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(trippleTap:)]];
     self.graphView.dataSource = self;
+}
+
+-(void)setGraphProgram:(id)graphProgram
+{
+    if (graphProgram != _graphProgram) {
+        _graphProgram = graphProgram;
+        [self.graphView setNeedsDisplay];
+    }
 }
 
 - (NSArray *)graphData:(GraphView *)sender
@@ -40,13 +49,13 @@
         
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
         float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
-        if (y){
+        if (!isnan(y)){
         //still need to match the axis labels
         points = 
             [points arrayByAddingObject:
              [NSValue valueWithCGPoint:
                 CGPointMake(self.graphView.origin.x + x*pointsPerUnit,
-                            self.graphView.origin.y + y*pointsPerUnit)]];
+                            self.graphView.origin.y - y*pointsPerUnit)]];
         }
     }
     
@@ -66,6 +75,8 @@
 
 - (void)viewDidUnload {
     [self setGraphView:nil];
+    [self setToolbar:nil];
+    [self setToolbar:nil];
     [super viewDidUnload];
 }
 @end

@@ -33,11 +33,41 @@
 @synthesize thisProgram = _thisProgram;
 //------- synthesize and init test variables and model ----------//
 
-/* just playing around with rotation
+// just playing around with rotation
  -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
-    return YES;
+     if ((orientation == UIInterfaceOrientationPortrait) || (orientation == UIInterfaceOrientationPortraitUpsideDown)){
+         return NO;
+     }
+     return YES;
 }
-*/ 
+
+-(void) awakeFromNib
+{
+    [super awakeFromNib];
+    self.splitViewController.delegate = self;
+}
+
+-(BOOL) splitViewController:(UISplitViewController *)svc 
+   shouldHideViewController:(UIViewController *)vc 
+              inOrientation:(UIInterfaceOrientation)orientation
+{
+    return NO;
+}
+
+-(void) splitViewController:(UISplitViewController *)svc
+     willHideViewController:(UIViewController *)aViewController
+          withBarButtonItem:(UIBarButtonItem *)barButtonItem
+       forPopoverController:(UIPopoverController *)pc
+{
+    barButtonItem.title = self.title;
+}
+
+-(void) splitViewController:(UISplitViewController *)svc
+     willShowViewController:(UIViewController *)aViewController
+  invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
+{
+    barButtonItem = nil;
+}
  
 -(NSArray *)testVariableValues{
     if (_testVariableValues == nil)
@@ -94,6 +124,11 @@
 
     //refresh log
     self.keylog.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
+    
+    //if ipad refresh graph
+    if ([self splitViewGraphViewController]){
+        [[self splitViewGraphViewController] setGraphProgram:self.thisProgram];
+    }
 }
 
 //------- React to Buttons ------------------//
@@ -154,6 +189,8 @@
 
 - (IBAction)variablePressed:(id)sender {
     NSString *variable = [sender currentTitle];
+    if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
+
     self.display.text = variable;
     
     //add the variable and run the program
@@ -181,13 +218,23 @@
     self.display.text = @"0";
     self.keylog.text = @"";
     self.thisProgram = nil;
+    [self refreshDisplays];
+}
+
+-(GraphViewController *)splitViewGraphViewController
+{
+    id gvc = [self.splitViewController.viewControllers lastObject];
+    if (![gvc isKindOfClass:[GraphViewController class]]){
+        gvc = nil;
+    }
+    return gvc;
 }
 
 //----- Graph button ------
 - (void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender{
     if ([segue.identifier isEqualToString:@"Graph"]){
         //graph segue preparation
-        [segue.destinationViewController setGraphProgram:self.thisProgram];
+        [segue.destinationViewController setGraphProgram:self.thisProgram];           
     }
         
 }
