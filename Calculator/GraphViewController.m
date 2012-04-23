@@ -11,14 +11,30 @@
 #import "CalculatorBrain.h"
 
 @interface GraphViewController () <GraphViewDataSource>
+@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet GraphView *graphView;
 @end
 
 @implementation GraphViewController
+@synthesize toolbar = _toolbar;
 @synthesize graphView = _graphView;
 @synthesize graphProgram = _graphProgram;
-@synthesize toolbar = _toolbar;
+@synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
     
+-(void) setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem{
+    if (_splitViewBarButtonItem != splitViewBarButtonItem){
+        NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];
+        //if it was present, remove it
+        if (_splitViewBarButtonItem){
+            [toolbarItems removeObject:_splitViewBarButtonItem];   
+        }
+        //if it will be present, add it
+        if (splitViewBarButtonItem) [toolbarItems insertObject:splitViewBarButtonItem atIndex:0];
+        self.toolbar.items = toolbarItems;
+        _splitViewBarButtonItem = splitViewBarButtonItem;
+    }
+}
+
 -(void) setGraphView:(GraphView*)graphView{
     _graphView = graphView;
     [self.graphView addGestureRecognizer:[[UIPinchGestureRecognizer alloc] initWithTarget:self.graphView action:@selector(pinch:)]];
@@ -38,27 +54,25 @@
 - (NSArray *)graphData:(GraphView *)sender
                 InRect: (CGRect)rect
 {
-    NSArray * points = [[NSArray alloc] init];
+    NSMutableArray * points = [[[NSArray alloc] init] mutableCopy];
     CGFloat pointsPerUnit = self.graphView.viewScale;
-    
     CGFloat xmin = -(self.graphView.origin.x/pointsPerUnit);
     CGFloat xmax = (rect.size.width-self.graphView.origin.x)/pointsPerUnit;
-    CGFloat xstep = (xmax-xmin)/rect.size.width;
-    
+    CGFloat xstep = (xmax-xmin)/(rect.size.width*self.graphView.contentScaleFactor);
+             
     for (CGFloat x = xmin; x <=xmax; x+=xstep) {  
         
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
         float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
+       
+        //if y is a valid value, plot it
         if (!isnan(y)){
-        //still need to match the axis labels
-        points = 
-            [points arrayByAddingObject:
-             [NSValue valueWithCGPoint:
-                CGPointMake(self.graphView.origin.x + x*pointsPerUnit,
-                            self.graphView.origin.y - y*pointsPerUnit)]];
+            [points addObject:[NSValue valueWithCGPoint:
+                               CGPointMake(self.graphView.origin.x + x*pointsPerUnit,
+                                           self.graphView.origin.y - y*pointsPerUnit)]];
         }
     }
-    
+  
     NSString *programDescription = [CalculatorBrain descriptionOfProgram:self.graphProgram];
 
     //add description of program to graph view unless in a split view
@@ -76,6 +90,7 @@
 
 - (void)viewDidUnload {
     [self setGraphView:nil];
+    [self setToolbar:nil];
     [self setToolbar:nil];
     [self setToolbar:nil];
     [super viewDidUnload];

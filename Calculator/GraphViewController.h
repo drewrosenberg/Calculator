@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "splitViewBarButtonItemPresenter.h"
 
-@interface GraphViewController : UIViewController
+@interface GraphViewController : UIViewController <splitViewBarButtonItemPresenter>
+
 @property (weak, nonatomic) id graphProgram;
-@property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @end

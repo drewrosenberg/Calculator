@@ -26,16 +26,45 @@
 
 -(CGFloat) viewScale{
     if (!_viewScale) {
-        return DEFAULT_SCALE;
+        NSNumber * scale = [[NSUserDefaults standardUserDefaults] objectForKey:@"scale"];
+        if (!scale){
+            return DEFAULT_SCALE;
+        }
+        else{
+            NSLog(@"read scale user default: %@\n",scale);
+            return scale.floatValue;
+        }
+        
     }else {
         return _viewScale;
     }
+}
+
+-(CGPoint) origin{
+    if (!_origin.x) {
+        NSNumber * xOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"];
+        NSLog(@"read origin.x user default: %@\n",xOrigin);
+        NSNumber * yOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"];
+        NSLog(@"read origin.x user default: %@\n",yOrigin);
+        CGPoint defaultOrigin = CGPointMake(xOrigin.floatValue, yOrigin.floatValue);
+        
+        return defaultOrigin;
+    }
+    else return _origin;
 }
 
 -(void) setViewScale:(CGFloat)viewScale
 {
     if (viewScale != _viewScale){
         _viewScale = viewScale;
+        
+        //load scale into user defaults
+        NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+        if (standardDefaults){
+            [standardDefaults setObject:[NSNumber numberWithFloat:viewScale] forKey:@"scale"];
+            NSLog(@"wrote scale user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]);
+        }
+        
         [self setNeedsDisplay];
     }
 }
@@ -43,6 +72,15 @@
 -(void) setOrigin:(CGPoint)origin{
     if (!CGPointEqualToPoint(origin, _origin)){
         _origin = origin;
+
+        //load origin into user defaults
+        NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
+        if (standardDefaults){
+            [standardDefaults setObject:[NSNumber numberWithFloat:origin.x] forKey:@"x-origin"];
+            NSLog(@"wrote origin.x user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"]);
+            [standardDefaults setObject:[NSNumber numberWithFloat:origin.y] forKey:@"y-origin"];
+            NSLog(@"wrote origin.y user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"]);
+        }
         [self setNeedsDisplay];
     }
 }
@@ -88,7 +126,7 @@
     {
         CGPoint translation = [gesture translationInView:self];
         self.origin = CGPointMake(self.origin.x+translation.x, self.origin.y+translation.y);
-        self.panActivated = YES;
+        self.panActivated = YES; //don't center any more - set panActivated to yes
         [gesture setTranslation:CGPointZero inView:self];
     }
 }
@@ -98,7 +136,7 @@
 {
     gesture.numberOfTapsRequired = 3;
     if (gesture.state == UIGestureRecognizerStateEnded){
-        self.panActivated = NO;
+        self.panActivated = NO; //center again - set panActivated to no
     }
 }
 
@@ -112,14 +150,15 @@
     
     NSArray *pointsArray = [self.dataSource graphData:self InRect:bounds];
     
-    CGContextMoveToPoint(context, 
-                [[pointsArray objectAtIndex:0]CGPointValue].x, 
-                [[pointsArray objectAtIndex:0]CGPointValue].y);
-    
-    int pointCount = [pointsArray count];
+    if ([pointsArray count] > 0){
+        CGContextMoveToPoint(context, 
+            [[pointsArray objectAtIndex:0]CGPointValue].x, 
+            [[pointsArray objectAtIndex:0]CGPointValue].y);
+    }
+
     //put graph points from controller on screen and draw lines between them
-    for (int i=0; i<pointCount; i++) {
-        CGContextAddLineToPoint(context, [[pointsArray objectAtIndex:i] CGPointValue].x, [[pointsArray objectAtIndex:i] CGPointValue].y);
+    for (int i=0; i<[pointsArray count]; i++) {
+            CGContextAddLineToPoint(context, [[pointsArray objectAtIndex:i] CGPointValue].x, [[pointsArray objectAtIndex:i] CGPointValue].y);
     }
    
     CGContextStrokePath(context);
@@ -128,9 +167,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    //get context
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    
     if (!self.panActivated){
         self.origin = CGPointMake(rect.size.width/2, rect.size.height/2);        
     }
@@ -138,7 +174,10 @@
     //Draw Axes
     [AxesDrawer drawAxesInRect:rect originAtPoint:self.origin scale:self.viewScale];
     
-    [self drawGraph:context InRect:rect];    
+    //get context
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    //Draw Graph
+    [self drawGraph:context InRect:rect];
 }
 
 

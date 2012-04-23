@@ -9,6 +9,7 @@
 #import "CalculatorViewController.h"
 #import "CalculatorBrain.h"
 #import "GraphViewController.h"
+#import "splitViewBarButtonItemPresenter.h"
 
 
 @interface CalculatorViewController()
@@ -16,13 +17,13 @@
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) NSArray * thisProgram;
 @property (nonatomic, strong) NSArray * testVariableValues;
-@property (nonatomic, strong) NSDictionary * activeVariableValues;
+@property (nonatomic, strong) NSMutableDictionary * activeVariableValues;
 @end
 
 @implementation CalculatorViewController
 
 //----- synthesize displays ---------//
-@synthesize display = _display; 
+@synthesize display = _display;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -30,31 +31,36 @@
 @synthesize testVariableValues = _testVariableValues;
 @synthesize activeVariableValues = _activeVariableValues;
 @synthesize thisProgram = _thisProgram;
-//------- synthesize and init test variables and model ----------//
 
 -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
     if (!self.splitViewController){
         return NO;
     }
     else{
-        if ((orientation == UIInterfaceOrientationPortrait) || (orientation == UIInterfaceOrientationPortraitUpsideDown)){
-            return NO;
-        }
-     return YES;
+        return YES;
     }
 }
 
+//------------split view delegate stuff
 -(void) awakeFromNib
 {
     [super awakeFromNib];
     self.splitViewController.delegate = self;
 }
 
+-(id <splitViewBarButtonItemPresenter> )splitViewBarButtonItemPresenter{
+    id detailVC = [self.splitViewController.viewControllers lastObject];
+    if ([detailVC conformsToProtocol:@protocol(splitViewBarButtonItemPresenter)]){
+        return detailVC;
+    }else return nil;
+}
+
 -(BOOL) splitViewController:(UISplitViewController *)svc 
    shouldHideViewController:(UIViewController *)vc 
               inOrientation:(UIInterfaceOrientation)orientation
 {
-    return NO;
+    NSLog(@"%s", __FUNCTION__);
+    return [self splitViewBarButtonItemPresenter] ? UIInterfaceOrientationIsPortrait(orientation) : NO;
 }
 
 -(void) splitViewController:(UISplitViewController *)svc
@@ -62,16 +68,24 @@
           withBarButtonItem:(UIBarButtonItem *)barButtonItem
        forPopoverController:(UIPopoverController *)pc
 {
+    NSLog(@"%s", __FUNCTION__);
     barButtonItem.title = self.title;
+    [pc setPopoverContentSize:CGSizeMake(480.0f, 320.0f) animated:NO];
+    //tell the detail view to put this button up
+    if (!self.title) self.title = @"Drew's Calculator";
+    [self splitViewBarButtonItemPresenter].splitViewBarButtonItem = barButtonItem;
 }
 
 -(void) splitViewController:(UISplitViewController *)svc
      willShowViewController:(UIViewController *)aViewController
   invalidatingBarButtonItem:(UIBarButtonItem *)barButtonItem
 {
-    barButtonItem = nil;
+    NSLog(@"%s", __FUNCTION__);
+    //tell the detail view to take the button away
+    [self splitViewBarButtonItemPresenter].splitViewBarButtonItem = nil;
 }
  
+//------- synthesize and init test variables and model ----------//
 -(NSArray *)testVariableValues{
     if (_testVariableValues == nil)
     {
@@ -114,6 +128,9 @@
     
     return _activeVariableValues;
 }
+//- (IBAction)xValueChanged:(id)sender {
+  //  [self.activeVariableValues setValue:[sender //currentTitle] forKey:@"x"];
+//}
 
 -(NSArray*) thisProgram{
     if (_thisProgram == nil) _thisProgram = [[NSArray alloc] init];
@@ -135,6 +152,7 @@
     //if ipad refresh graph
     if ([self splitViewGraphViewController]){
         [[self splitViewGraphViewController] setGraphProgram:self.thisProgram];
+        
     }
 }
 
