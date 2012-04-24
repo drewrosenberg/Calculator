@@ -9,8 +9,9 @@
 #import "GraphViewController.h"
 #import "GraphView.h"
 #import "CalculatorBrain.h"
+#import "CalculatorProgramTableViewController.h"
 
-@interface GraphViewController () <GraphViewDataSource>
+@interface GraphViewController () <GraphViewDataSource, CalculatorProgramsTableViewControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIToolbar *toolbar;
 @property (weak, nonatomic) IBOutlet GraphView *graphView;
 @end
@@ -20,6 +21,34 @@
 @synthesize graphView = _graphView;
 @synthesize graphProgram = _graphProgram;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+
+#define FAVORITES_KEY @"CalculatorGraphViewController.Favorites"
+
+- (IBAction)addToFavorites:(id)sender {
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
+    if (!favorites) favorites = [NSMutableArray array];
+    [favorites addObject:self.graphProgram];
+    [defaults setObject:favorites forKey:FAVORITES_KEY];
+    [defaults synchronize];
+    NSLog(@"wrote favorite: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY]);
+}
+
+-(void) prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:@"Show Favorite Graphs"]){
+        NSArray *programs = [[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY];
+        NSLog(@"loading programs to table view: %@",programs);
+        [segue.destinationViewController setPrograms:programs];
+        [segue.destinationViewController setDelegate:self];
+        
+    }
+}
+
+-(void) CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender chooseProgram:(id)program
+{
+    self.graphProgram = program;
+}
     
 -(void) setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem{
     if (_splitViewBarButtonItem != splitViewBarButtonItem){

@@ -62,9 +62,10 @@
         NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
         if (standardDefaults){
             [standardDefaults setObject:[NSNumber numberWithFloat:viewScale] forKey:@"scale"];
+            [standardDefaults synchronize];
             NSLog(@"wrote scale user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"scale"]);
         }
-        
+
         [self setNeedsDisplay];
     }
 }
@@ -77,6 +78,7 @@
         NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
         if (standardDefaults){
             [standardDefaults setObject:[NSNumber numberWithFloat:origin.x] forKey:@"x-origin"];
+            [standardDefaults synchronize];
             NSLog(@"wrote origin.x user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"]);
             [standardDefaults setObject:[NSNumber numberWithFloat:origin.y] forKey:@"y-origin"];
             NSLog(@"wrote origin.y user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"]);

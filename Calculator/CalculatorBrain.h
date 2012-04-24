@@ -14,13 +14,14 @@
 - (void)pushOperand:(double)operand;
 - (void)clearOperands;
 - (double)performOperation:(NSString * ) operation;
+
+//program is alwas guaranteed to be a property list
 @property (readonly) id program; 
 
 //class methods
 + (double) runProgram:(id)program;
-
 + (double) runProgram:(id)program 
-        usingVariableValues:(NSDictionary *)variableValues;
+  usingVariableValues:(NSDictionary *)variableValues;
 
 + (NSSet *)variablesUsedInProgram:(id)program;
 
