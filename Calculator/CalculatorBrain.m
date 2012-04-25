@@ -92,8 +92,7 @@
 +(BOOL) isOperation:(NSString *)operation
 {
     NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"Pi", nil];
-    if ([operationList member:operation]){return YES;}
-    else{ return NO;}
+    return [operationList containsObject:operation];
 }
 
 +(NSString *) removeTrailingComma:(NSString *)myString{
@@ -129,8 +128,6 @@
     else if ([self is1Operation:topOfStack]){
         //result = operation concat ( concat descriptionofTopOfStack concat )
         NSString * param = [self descriptionOfTopOfStack:stack];
-        //remove ", "
-//        param = [self removeTrailingComma:param];
         result = [NSString stringWithFormat:@"%@(%@)",topOfStack,param];
     }
 
@@ -144,18 +141,6 @@
         //must be a variable or 0 number operation
         result = topOfStack;
     }
-     
-/*    //add ", " to the end
-    
-    if ([stack lastObject]){
-        result = [NSString stringWithFormat:@"%@%@, ", [self descriptionOfTopOfStack:stack], result];
-    }
-    else{
-        result = [result stringByAppendingFormat:@", "];
-    }
-    
-    NSLog(@"result=%@\n", result);
-*/
     
     return result; 
 }
