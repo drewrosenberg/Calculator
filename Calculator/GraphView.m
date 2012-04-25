@@ -11,17 +11,27 @@
 
 #define DEFAULT_SCALE 10
 @interface GraphView()
-@property (nonatomic) BOOL panActivated;
+@property (nonatomic) int graphWidth;
+@property (nonatomic) int graphHeight;
+
 @end
 
 @implementation GraphView
 @synthesize dataSource = _dataSource;
 @synthesize viewScale = _viewScale;
 @synthesize origin = _origin;
-@synthesize panActivated = _panActivated;
+@synthesize graphWidth = _graphWidth;
+@synthesize graphHeight = _graphHeight;
 
 -(void)setup{
     self.contentMode = UIViewContentModeRedraw;
+    
+    //load origin from user defaults
+    NSNumber * xOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"];
+    NSLog(@"read origin.x user default: %@\n",xOrigin);
+    NSNumber * yOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"];
+    NSLog(@"read origin.x user default: %@\n",yOrigin);
+    self.origin = CGPointMake(xOrigin.floatValue, yOrigin.floatValue);
 }
 
 -(CGFloat) viewScale{
@@ -40,17 +50,18 @@
     }
 }
 
--(CGPoint) origin{
-    if (!_origin.x) {
-        NSNumber * xOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"];
-        NSLog(@"read origin.x user default: %@\n",xOrigin);
-        NSNumber * yOrigin = [[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"];
-        NSLog(@"read origin.x user default: %@\n",yOrigin);
-        CGPoint defaultOrigin = CGPointMake(xOrigin.floatValue, yOrigin.floatValue);
-        
-        return defaultOrigin;
+-(void) setGraphWidth:(int)graphWidth
+{
+    if (graphWidth != _graphWidth){
+        _graphWidth = graphWidth;
     }
-    else return _origin;
+}
+
+-(void) setGraphHeight:(int)graphHeight
+{
+    if (graphHeight != _graphHeight){
+        _graphHeight = graphHeight;
+    }
 }
 
 -(void) setViewScale:(CGFloat)viewScale
@@ -78,21 +89,13 @@
         NSUserDefaults * standardDefaults = [NSUserDefaults standardUserDefaults];
         if (standardDefaults){
             [standardDefaults setObject:[NSNumber numberWithFloat:origin.x] forKey:@"x-origin"];
-            [standardDefaults synchronize];
             NSLog(@"wrote origin.x user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"x-origin"]);
             [standardDefaults setObject:[NSNumber numberWithFloat:origin.y] forKey:@"y-origin"];
             NSLog(@"wrote origin.y user default: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:@"y-origin"]);
+            [standardDefaults synchronize];
         }
-        [self setNeedsDisplay];
-    }
-}
 
--(void) setPanActivated:(BOOL)panActivated{
-    if (_panActivated != panActivated){
-        _panActivated = panActivated;
-        if (panActivated == NO){
-            [self setNeedsDisplay];
-        }
+    [self setNeedsDisplay];
     }
 }
 
@@ -110,9 +113,6 @@
     [self setup];
 }
 
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-
 -(void)pinch:(UIPinchGestureRecognizer *)gesture
 {
     if ((gesture.state == UIGestureRecognizerStateChanged) || (gesture.state == UIGestureRecognizerStateEnded))
@@ -128,7 +128,6 @@
     {
         CGPoint translation = [gesture translationInView:self];
         self.origin = CGPointMake(self.origin.x+translation.x, self.origin.y+translation.y);
-        self.panActivated = YES; //don't center any more - set panActivated to yes
         [gesture setTranslation:CGPointZero inView:self];
     }
 }
@@ -138,7 +137,7 @@
 {
     gesture.numberOfTapsRequired = 3;
     if (gesture.state == UIGestureRecognizerStateEnded){
-        self.panActivated = NO; //center again - set panActivated to no
+        self.origin = CGPointMake(self.graphWidth/2, self.graphHeight/2);
     }
 }
 
@@ -167,11 +166,11 @@
     UIGraphicsPopContext();
 }
 
+
 - (void)drawRect:(CGRect)rect
 {
-    if (!self.panActivated){
-        self.origin = CGPointMake(rect.size.width/2, rect.size.height/2);        
-    }
+    self.graphWidth = rect.size.width;
+    self.graphHeight = rect.size.height;
     
     //Draw Axes
     [AxesDrawer drawAxesInRect:rect originAtPoint:self.origin scale:self.viewScale];

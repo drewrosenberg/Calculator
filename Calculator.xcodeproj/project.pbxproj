@@ -100,12 +100,8 @@
 			children = (
 				467F81F91515A734004DE43B /* CalculatorBrain.m */,
 				467F81F81515A727004DE43B /* CalculatorBrain.h */,
-				46C812CE1537E4D900A1A34E /* AxesDrawer.h */,
-				46C812CF1537E4D900A1A34E /* AxesDrawer.m */,
 				46A206621537EC5D0032D387 /* GraphView.h */,
 				46A206631537EC5D0032D387 /* GraphView.m */,
-				46881EA0150C37B000D8EF78 /* CalculatorAppDelegate.h */,
-				46881EA1150C37B000D8EF78 /* CalculatorAppDelegate.m */,
 				46881EA3150C37B000D8EF78 /* iPhone.storyboard */,
 				468C56981540A67600D22B8F /* iPad.storyboard */,
 				46E3BAA215467BE300B9A54B /* CalculatorProgramTableViewController.h */,
@@ -123,6 +119,10 @@
 		46881E98150C37B000D8EF78 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				46C812CE1537E4D900A1A34E /* AxesDrawer.h */,
+				46C812CF1537E4D900A1A34E /* AxesDrawer.m */,
+				46881EA0150C37B000D8EF78 /* CalculatorAppDelegate.h */,
+				46881EA1150C37B000D8EF78 /* CalculatorAppDelegate.m */,
 				46881E99150C37B000D8EF78 /* Calculator-Info.plist */,
 				46881E9A150C37B000D8EF78 /* InfoPlist.strings */,
 				46881E9D150C37B000D8EF78 /* main.m */,
