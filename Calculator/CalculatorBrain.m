@@ -12,12 +12,35 @@
 @property (nonatomic, strong) NSMutableArray *programStack;
 @end
 
+
+//STATIC VARIABLES
+static NSDictionary *OPERATION_LIST = nil;
+
 @implementation CalculatorBrain
+/// list of supported operations///
++(NSDictionary *)operationList{
+/// dictionary key is operation, value is number of operands
+    if (!OPERATION_LIST){
+        OPERATION_LIST = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSNumber numberWithInt:2], @"+",
+                          [NSNumber numberWithInt:2], @"-",
+                          [NSNumber numberWithInt:2], @"/",
+                          [NSNumber numberWithInt:2], @"*",
+                          [NSNumber numberWithInt:2], @"SIN",
+                          [NSNumber numberWithInt:2], @"COS",
+                          [NSNumber numberWithInt:2], @"SQRT",
+                          [NSNumber numberWithInt:2], @"Pi",
+                          nil];
+    }
+    
+    return OPERATION_LIST;
+}
+
 
 @synthesize programStack = _programStack;
 
-
 ////////////// Legacy Methods //////////////////////////
+
 - (NSMutableArray *)programStack
 {
     if (_programStack == nil) _programStack = [[NSMutableArray alloc] init];
@@ -75,24 +98,16 @@
   
 +(BOOL) is2Operation: (NSString *)operation
 {
-    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*", nil];
-    
-    if ([operationList member:operation]){return YES;}
-    else{ return NO;}
+    return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:2];
 }
 
 +(BOOL) is1Operation: (NSString *)operation
 {
-    NSSet * operationList = [NSSet setWithObjects:@"SIN",@"COS",@"SQRT", nil];
-    
-    if ([operationList member:operation]){return YES;}
-    else{ return NO;}
-}
+    return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:1];}
 
 +(BOOL) isOperation:(NSString *)operation
 {
-    NSSet * operationList = [NSSet setWithObjects:@"+",@"-",@"/",@"*",@"SIN",@"COS",@"SQRT",@"Pi", nil];
-    return [operationList containsObject:operation];
+    return [[self operationList] objectForKey:operation] != nil;
 }
 
 +(NSString *) removeTrailingComma:(NSString *)myString{
