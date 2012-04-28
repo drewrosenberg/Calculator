@@ -29,7 +29,12 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
     if (!favorites) favorites = [NSMutableArray array];
-    [favorites addObject:self.graphProgram];
+    
+    //add the program unless it is already there
+    if (![favorites containsObject:self.graphProgram]){
+        [favorites addObject:self.graphProgram];
+    }
+    
     [defaults setObject:favorites forKey:FAVORITES_KEY];
     [defaults synchronize];
     NSLog(@"wrote favorite: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY]);
@@ -46,12 +51,23 @@
     }
 }
 
+#pragma CalculatorProgramTableViewControllerDelegate
+
 -(void) CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender chooseProgram:(id)program
 {
     self.graphProgram = program;
     [self.delegate graphViewController:self chooseProgram:self.graphProgram];
 }
-    
+
+-(void) CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender deleteFromFavorites:(NSArray *)programs
+{
+    [[NSUserDefaults standardUserDefaults] setObject:programs forKey:FAVORITES_KEY];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+
+    NSLog(@"removed favorite: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY]);
+}
+
+
 -(void) setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem{
     if (_splitViewBarButtonItem != splitViewBarButtonItem){
         NSMutableArray *toolbarItems = [self.toolbar.items mutableCopy];

@@ -52,12 +52,6 @@
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
-{
-    // Return the number of sections.
-    return 1;
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
@@ -74,8 +68,13 @@
     }
     
     // Configure the cell...
-    id program = [self.programs objectAtIndex:indexPath.row];
-    cell.textLabel.text = [@"y= " stringByAppendingString:[CalculatorBrain descriptionOfProgram:program]];
+    NSString * programDescription = [CalculatorBrain descriptionOfProgram:[self.programs objectAtIndex:indexPath.row]];
+    if (programDescription){
+        cell.textLabel.text = [@"y= " stringByAppendingString:programDescription];
+    }
+    else {
+        cell.textLabel.text = @"y=?";
+    }
     return cell;
 }
 
@@ -89,26 +88,21 @@
 */
 
 // Override to support editing the table view.
-#define FAVORITES_KEY @"CalculatorGraphViewController.Favorites"
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
         NSMutableArray * mutablePrograms = [self.programs mutableCopy];
         [mutablePrograms removeObject:[mutablePrograms objectAtIndex:indexPath.row]];
- 
         self.programs = mutablePrograms;
+        [self.delegate CalculatorProgramsTableViewController:self deleteFromFavorites:mutablePrograms];
 
-        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
-        NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
-        if (!favorites) favorites = [NSMutableArray array];
-        [favorites removeObject:[favorites objectAtIndex:indexPath.row]];
-        [defaults setObject:favorites forKey:FAVORITES_KEY];
-        [defaults synchronize];
-        NSLog(@"removed favorite: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY]);
-
-        [self.tableView reloadData];
+        //update tableView
+        [tableView beginUpdates];
+        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        [tableView endUpdates];
     }   
+    
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   

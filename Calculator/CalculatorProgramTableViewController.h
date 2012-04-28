@@ -13,6 +13,8 @@
 @protocol CalculatorProgramsTableViewControllerDelegate <NSObject>
 @optional -(void)CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender
                                chooseProgram:(id)program;
+-(void)CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender 
+                         deleteFromFavorites:(NSArray *)programs;
 @end
 
 @interface CalculatorProgramTableViewController : UITableViewController
