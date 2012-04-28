@@ -26,10 +26,10 @@ static NSDictionary *OPERATION_LIST = nil;
                           [NSNumber numberWithInt:2], @"-",
                           [NSNumber numberWithInt:2], @"/",
                           [NSNumber numberWithInt:2], @"*",
-                          [NSNumber numberWithInt:2], @"SIN",
-                          [NSNumber numberWithInt:2], @"COS",
-                          [NSNumber numberWithInt:2], @"SQRT",
-                          [NSNumber numberWithInt:2], @"Pi",
+                          [NSNumber numberWithInt:1], @"SIN",
+                          [NSNumber numberWithInt:1], @"COS",
+                          [NSNumber numberWithInt:1], @"SQRT",
+                          [NSNumber numberWithInt:0], @"Pi",
                           nil];
     }
     
@@ -156,7 +156,7 @@ static NSDictionary *OPERATION_LIST = nil;
         //must be a variable or 0 number operation
         result = topOfStack;
     }
-    
+    NSLog(@"result =%@\n",result);
     return result; 
 }
 
