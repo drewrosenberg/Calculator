@@ -12,7 +12,7 @@
 #import "splitViewBarButtonItemPresenter.h"
 
 
-@interface CalculatorViewController()
+@interface CalculatorViewController() <GraphViewControllerDelegate>
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) NSArray * thisProgram;
@@ -128,9 +128,6 @@
     
     return _activeVariableValues;
 }
-//- (IBAction)xValueChanged:(id)sender {
-  //  [self.activeVariableValues setValue:[sender //currentTitle] forKey:@"x"];
-//}
 
 -(NSArray*) thisProgram{
     if (_thisProgram == nil) _thisProgram = [[NSArray alloc] init];
@@ -152,6 +149,7 @@
     //if ipad refresh graph
     if ([self splitViewGraphViewController]){
         [[self splitViewGraphViewController] setGraphProgram:self.thisProgram];
+        [[self splitViewGraphViewController] setDelegate:self];
         
     }
 }
@@ -262,6 +260,15 @@
     }
         
 }
+
+
+#pragma GraphViewDelegate
+-(void) graphViewController:(GraphViewController *)sender chooseProgram:(id)program{
+    self.thisProgram = program;
+    [self refreshDisplays];
+}
+
+
 
 //---------------------------------------------
 

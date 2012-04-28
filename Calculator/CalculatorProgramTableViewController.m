@@ -96,8 +96,7 @@
         // Delete the row from the data source
         NSMutableArray * mutablePrograms = [self.programs mutableCopy];
         [mutablePrograms removeObject:[mutablePrograms objectAtIndex:indexPath.row]];
-        //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
-
+ 
         self.programs = mutablePrograms;
 
         NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];

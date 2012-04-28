@@ -9,7 +9,16 @@
 #import <UIKit/UIKit.h>
 #import "splitViewBarButtonItemPresenter.h"
 
+@class GraphViewController;
+
+@protocol GraphViewControllerDelegate <NSObject>
+
+-(void)graphViewController:(GraphViewController *)sender chooseProgram:(id)program;
+
+@end
+
 @interface GraphViewController : UIViewController <splitViewBarButtonItemPresenter>
 
 @property (weak, nonatomic) id graphProgram;
+@property (weak, nonatomic) id <GraphViewControllerDelegate> delegate;
 @end

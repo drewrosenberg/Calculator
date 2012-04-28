@@ -21,6 +21,7 @@
 @synthesize graphView = _graphView;
 @synthesize graphProgram = _graphProgram;
 @synthesize splitViewBarButtonItem = _splitViewBarButtonItem;
+@synthesize delegate;
 
 #define FAVORITES_KEY @"CalculatorGraphViewController.Favorites"
 
@@ -48,6 +49,7 @@
 -(void) CalculatorProgramsTableViewController:(CalculatorProgramTableViewController *)sender chooseProgram:(id)program
 {
     self.graphProgram = program;
+    [self.delegate graphViewController:self chooseProgram:self.graphProgram];
 }
     
 -(void) setSplitViewBarButtonItem:(UIBarButtonItem *)splitViewBarButtonItem{
