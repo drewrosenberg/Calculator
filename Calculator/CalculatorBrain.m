@@ -226,7 +226,7 @@ static NSDictionary *OPERATION_LIST = nil;
 
 //// RunProgram Methods /////
 + (double) runProgram:(id)program
-{
+{  
     NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray self]]){
         stack = [program mutableCopy];

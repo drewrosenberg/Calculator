@@ -88,19 +88,33 @@
 }
 */
 
-/*
 // Override to support editing the table view.
+#define FAVORITES_KEY @"CalculatorGraphViewController.Favorites"
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        NSMutableArray * mutablePrograms = [self.programs mutableCopy];
+        [mutablePrograms removeObject:[mutablePrograms objectAtIndex:indexPath.row]];
+        //[tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
+
+        self.programs = mutablePrograms;
+
+        NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+        NSMutableArray *favorites = [[defaults objectForKey:FAVORITES_KEY] mutableCopy];
+        if (!favorites) favorites = [NSMutableArray array];
+        [favorites removeObject:[favorites objectAtIndex:indexPath.row]];
+        [defaults setObject:favorites forKey:FAVORITES_KEY];
+        [defaults synchronize];
+        NSLog(@"removed favorite: %@\n",[[NSUserDefaults standardUserDefaults] objectForKey:FAVORITES_KEY]);
+
+        [self.tableView reloadData];
     }   
     else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
 }
-*/
+
 
 /*
 // Override to support rearranging the table view.

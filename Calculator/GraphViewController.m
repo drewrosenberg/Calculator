@@ -90,16 +90,18 @@
     CGFloat xstep = (xmax-xmin)/(rect.size.width*self.graphView.contentScaleFactor);
              
     for (CGFloat x = xmin; x <=xmax; x+=xstep) {  
-        
+
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
+                
         float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
-       
+
         //if y is a valid value, plot it
         if (!isnan(y)){
             [points addObject:[NSValue valueWithCGPoint:
                                CGPointMake(self.graphView.origin.x + x*pointsPerUnit,
                                            self.graphView.origin.y - y*pointsPerUnit)]];
-        }
+        }    
+
     }
   
     NSString *programDescription = [CalculatorBrain descriptionOfProgram:self.graphProgram];
