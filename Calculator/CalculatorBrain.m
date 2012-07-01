@@ -74,7 +74,7 @@
             result = sqrt([self popOperand]);
         //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
         } else if ([@"Pi" isEqualToString:operation]){
-            result = M_1_PI;
+            result = M_PI;
         }
         }
 
