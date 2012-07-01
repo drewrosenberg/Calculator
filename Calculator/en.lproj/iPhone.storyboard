@@ -15,15 +15,24 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="416"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="0" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="YMm-Dh-rJb">
                                 <rect key="frame" x="92" y="9" width="208" height="40"/>
+=======
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" text="0" textAlignment="right" autoshrinkMode="minimumScaleFactor" id="YMm-Dh-rJb">
+                                <rect key="frame" x="20" y="20" width="208" height="40"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="9l3-dF-Pms">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="20" y="57" width="64" height="37"/>
+=======
+                                <rect key="frame" x="92" y="69" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="7">
@@ -38,7 +47,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="uB3-rQ-3Nj">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="92" y="57" width="64" height="37"/>
+=======
+                                <rect key="frame" x="164" y="69" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="8">
@@ -53,7 +66,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="R83-6s-BiI">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="164" y="57" width="64" height="37"/>
+=======
+                                <rect key="frame" x="236" y="69" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="9">
@@ -68,7 +85,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JBF-13-zOe">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="20" y="102" width="64" height="37"/>
+=======
+                                <rect key="frame" x="92" y="114" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="4">
@@ -83,7 +104,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="opv-4R-fWI">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="92" y="102" width="64" height="37"/>
+=======
+                                <rect key="frame" x="164" y="114" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="5">
@@ -98,7 +123,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="LBz-Xj-Tcc">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="164" y="102" width="64" height="37"/>
+=======
+                                <rect key="frame" x="236" y="114" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="6">
@@ -113,7 +142,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="WbX-5n-MYm">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="20" y="147" width="64" height="37"/>
+=======
+                                <rect key="frame" x="92" y="159" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="1">
@@ -128,7 +161,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="Ivj-gv-ZGp">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="92" y="147" width="64" height="37"/>
+=======
+                                <rect key="frame" x="164" y="159" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="2">
@@ -158,7 +195,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="hu9-N9-CHd">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="164" y="147" width="64" height="37"/>
+=======
+                                <rect key="frame" x="236" y="159" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="3">
@@ -173,7 +214,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="wS5-h2-VnW">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="236" y="57" width="64" height="37"/>
+=======
+                                <rect key="frame" x="20" y="244" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="*">
@@ -188,7 +233,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cav-hh-TUa">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="236" y="102" width="64" height="37"/>
+=======
+                                <rect key="frame" x="20" y="203" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="/">
@@ -203,7 +252,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="EiA-dg-23j">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="236" y="147" width="64" height="37"/>
+=======
+                                <rect key="frame" x="20" y="114" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="+">
@@ -218,7 +271,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="jDb-Kz-3d7">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="236" y="192" width="64" height="37"/>
+=======
+                                <rect key="frame" x="20" y="159" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="-">
@@ -233,7 +290,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="cWJ-k5-Ylx">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="236" y="237" width="64" height="37"/>
+=======
+                                <rect key="frame" x="164" y="289" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="SIN">
@@ -248,7 +309,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JMs-Kq-UoT">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="164" y="237" width="64" height="37"/>
+=======
+                                <rect key="frame" x="92" y="289" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="COS">
@@ -263,7 +328,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="f9h-nG-azR">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="90" y="237" width="66" height="37"/>
+=======
+                                <rect key="frame" x="235" y="289" width="66" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="SQRT">
@@ -278,7 +347,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="UjC-dj-tZz">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="20" y="237" width="64" height="37"/>
+=======
+                                <rect key="frame" x="20" y="289" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Pi">
@@ -293,7 +366,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="JYt-iY-IbK">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="164" y="192" width="64" height="37"/>
+=======
+                                <rect key="frame" x="165" y="204" width="136" height="77"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="Enter">
@@ -308,7 +385,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="bJN-2e-5KN">
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                 <rect key="frame" x="20" y="192" width="64" height="37"/>
+=======
+                                <rect key="frame" x="92" y="244" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title=".">
@@ -322,8 +403,20 @@
                                     <action selector="digitPressed:" destination="2" eventType="touchUpInside" id="C28-Hv-s5f"/>
                                 </connections>
                             </button>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iIV-hy-1Fp">
                                 <rect key="frame" x="20" y="12" width="64" height="37"/>
+=======
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" text="" autoshrinkMode="minimumScaleFactor" id="aoL-fl-46T">
+                                <rect key="frame" x="20" y="0.0" width="281" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <nil key="highlightedColor"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iIV-hy-1Fp">
+                                <rect key="frame" x="20" y="69" width="64" height="37"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="C">
@@ -337,11 +430,19 @@
                                     <action selector="clearPressed" destination="2" eventType="touchUpInside" id="KGK-XK-52K"/>
                                 </connections>
                             </button>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="id2-Ns-GmV">
                                 <rect key="frame" x="20" y="282" width="64" height="37"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                                 <state key="normal" title="x">
+=======
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" hasAttributedTitle="NO" lineBreakMode="middleTruncation" id="X2K-jZ-Brd">
+                                <rect key="frame" x="235" y="25" width="64" height="36"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
+                                <state key="normal" title="back">
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                     <color key="titleColor" red="0.19607843459999999" green="0.30980393290000002" blue="0.52156865600000002" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -349,6 +450,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
                                     <action selector="variablePressed:" destination="2" eventType="touchUpInside" id="gT6-MT-FKc"/>
                                 </connections>
                             </button>
@@ -387,6 +489,9 @@
                                 </state>
                                 <connections>
                                     <segue destination="cEA-Ei-Tac" kind="push" identifier="Graph" id="iUZ-2z-Aq3"/>
+=======
+                                    <action selector="backspacePressed:" destination="2" eventType="touchUpInside" id="OUu-yW-C60"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                                 </connections>
                             </button>
                         </subviews>
@@ -398,6 +503,7 @@
                     </connections>
                 </viewController>
             </objects>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
             <point key="canvasLocation" x="160" y="27"/>
         </scene>
         <!--Graph View Controller-->
@@ -442,12 +548,21 @@
                 </navigationController>
             </objects>
             <point key="canvasLocation" x="-366" y="27"/>
+=======
+            <point key="canvasLocation" x="157" y="-345"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
         </scene>
     </scenes>
     <classes>
         <class className="CalculatorViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/CalculatorViewController.h"/>
             <relationships>
+<<<<<<< master:Calculator/en.lproj/iPhone.storyboard
+=======
+                <relationship kind="action" name="backspacePressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
+                <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
+>>>>>>> local:Calculator/en.lproj/MainStoryboard.storyboard
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
             </relationships>
         </class>
