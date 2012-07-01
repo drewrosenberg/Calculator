@@ -346,7 +346,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <outlet property="calculatorProgramLog" destination="aoL-fl-46T" id="ELZ-aA-37C"/>
                         <outlet property="display" destination="YMm-Dh-rJb" id="wWA-yk-fpI"/>
                         <outlet property="keylog" destination="aoL-fl-46T" id="TtA-Zs-fca"/>
                     </connections>
