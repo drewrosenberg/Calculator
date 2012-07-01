@@ -87,8 +87,6 @@
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
-
-    
 }
 - (IBAction)clearPressed {
     self.userIsInTheMiddleOfEnteringANumber = NO;
@@ -97,6 +95,42 @@
     self.keylog.text = @"";
     [self.brain clearOperands];
 }
+- (IBAction)backSpacePressed:(id)sender {
+    //only use the backspace if the user is in the middle of entering a number
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        //current entry is the display's text
+        NSString * currentEntry = self.display.text;
+    
+        //initialize the new entry to zero
+        NSString * newEntry = @"0";
+    
+        //if more than one digit has been pressed, change new entry from zero to display less one digit
+        if (currentEntry.length > 1){
+            newEntry = [currentEntry substringToIndex:[currentEntry length]-1];
+        }
+    
+        //set display to the new entry
+        self.display.text = newEntry;
+    
+        //if current entry was not zero, replace it with the new entry in the program log
+        if (![currentEntry isEqualToString:@"0"]){
+            int entryIndexinKeylog = self.keylog.text.length - currentEntry.length;
+
+            //remove old value
+            self.keylog.text = [self.keylog.text substringToIndex:entryIndexinKeylog];
+        
+            //replace it with new value
+            self.keylog.text = [self.keylog.text stringByAppendingString:newEntry];
+        }
+        else{
+            //user is no longer entering a number
+            self.userIsInTheMiddleOfEnteringANumber = NO;
+            //remove last digit from the program log
+            self.keylog.text = [self.keylog.text substringToIndex:[self.keylog.text length]-1];
+        }
+    }
+}
+
 //---------------------------------------------
 
 - (void)viewDidUnload {
