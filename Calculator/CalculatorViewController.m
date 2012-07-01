@@ -20,7 +20,7 @@
 
 //----- synthesize displays ---------//
 @synthesize display = _display; 
-@synthesize keylog = _keylog;
+@synthesize calculatorProgramLog = _calculatorProgramLog;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -46,7 +46,7 @@
         if (digit !=@"0"){
             self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
-            self.keylog.text = [self.keylog.text stringByAppendingString:digit];
+            self.calculatorProgramLog.text = [self.calculatorProgramLog.text stringByAppendingString:digit];
         }
         return;
     }
@@ -59,7 +59,7 @@
 
     //put the digit on the display and log
     self.display.text = [self.display.text stringByAppendingString:digit];
-    self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
+    self.calculatorProgramLog.text = [self.calculatorProgramLog.text stringByAppendingString:digit];             
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {     
@@ -67,12 +67,12 @@
     
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
     else{
-        self.keylog.text =[self.keylog.text stringByAppendingString:@" "];
+        self.calculatorProgramLog.text =[self.calculatorProgramLog.text stringByAppendingString:@" "];
         }
     
     //log the operation and space to the key log
-    self.keylog.text = [self.keylog.text stringByAppendingString:operation];
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
+    self.calculatorProgramLog.text = [self.calculatorProgramLog.text stringByAppendingString:operation];
+    self.calculatorProgramLog.text = [self.calculatorProgramLog.text stringByAppendingString:@" "];
     
     double result = [self.brain performOperation:operation];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
@@ -82,7 +82,7 @@
 }
 - (IBAction)enterPressed {
     //add a space to the log
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
+    self.calculatorProgramLog.text = [self.calculatorProgramLog.text stringByAppendingString:@" "];
 
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
@@ -94,14 +94,14 @@
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
     self.display.text = @"0";
-    self.keylog.text = @"";
+    self.calculatorProgramLog.text = @"";
     [self.brain clearOperands];
 }
 //---------------------------------------------
 
 - (void)viewDidUnload {
     [self setDisplay:nil];
-    [self setKeylog:nil];
+    [self setCalculatorProgramLog:nil];
     [super viewDidUnload];
 }
 @end
