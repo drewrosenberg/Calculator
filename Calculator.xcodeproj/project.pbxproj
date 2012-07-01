@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3A12781315A00CDF00E1983D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3A12781215A00CDF00E1983D /* SenTestingKit.framework */; };
-		3A12781415A00CDF00E1983D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46881E91150C37B000D8EF78 /* UIKit.framework */; };
-		3A12781515A00CDF00E1983D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46881E93150C37B000D8EF78 /* Foundation.framework */; };
-		3A12781B15A00CDF00E1983D /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3A12781915A00CDF00E1983D /* InfoPlist.strings */; };
-		3A12781E15A00CDF00E1983D /* Unit_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 3A12781D15A00CDF00E1983D /* Unit_Tests.m */; };
 		467F81FA1515A734004DE43B /* CalculatorBrain.m in Sources */ = {isa = PBXBuildFile; fileRef = 467F81F91515A734004DE43B /* CalculatorBrain.m */; };
 		46881E92150C37B000D8EF78 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46881E91150C37B000D8EF78 /* UIKit.framework */; };
 		46881E94150C37B000D8EF78 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46881E93150C37B000D8EF78 /* Foundation.framework */; };
@@ -24,13 +19,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		3A12781115A00CDF00E1983D /* Unit Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Unit Tests.octest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3A12781215A00CDF00E1983D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
-		3A12781815A00CDF00E1983D /* Unit Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Unit Tests-Info.plist"; sourceTree = "<group>"; };
-		3A12781A15A00CDF00E1983D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3A12781C15A00CDF00E1983D /* Unit_Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Unit_Tests.h; sourceTree = "<group>"; };
-		3A12781D15A00CDF00E1983D /* Unit_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Unit_Tests.m; sourceTree = "<group>"; };
-		3A12781F15A00CDF00E1983D /* Unit Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Unit Tests-Prefix.pch"; sourceTree = "<group>"; };
 		467F81F81515A727004DE43B /* CalculatorBrain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CalculatorBrain.h; sourceTree = "<group>"; };
 		467F81F91515A734004DE43B /* CalculatorBrain.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CalculatorBrain.m; sourceTree = "<group>"; };
 		46881E8D150C37B000D8EF78 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -49,16 +37,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		3A12780D15A00CDF00E1983D /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3A12781315A00CDF00E1983D /* SenTestingKit.framework in Frameworks */,
-				3A12781415A00CDF00E1983D /* UIKit.framework in Frameworks */,
-				3A12781515A00CDF00E1983D /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		46881E8A150C37AF00D8EF78 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -72,31 +50,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3A12781615A00CDF00E1983D /* Unit Tests */ = {
-			isa = PBXGroup;
-			children = (
-				3A12781C15A00CDF00E1983D /* Unit_Tests.h */,
-				3A12781D15A00CDF00E1983D /* Unit_Tests.m */,
-				3A12781715A00CDF00E1983D /* Supporting Files */,
-			);
-			path = "Unit Tests";
-			sourceTree = "<group>";
-		};
-		3A12781715A00CDF00E1983D /* Supporting Files */ = {
-			isa = PBXGroup;
-			children = (
-				3A12781815A00CDF00E1983D /* Unit Tests-Info.plist */,
-				3A12781915A00CDF00E1983D /* InfoPlist.strings */,
-				3A12781F15A00CDF00E1983D /* Unit Tests-Prefix.pch */,
-			);
-			name = "Supporting Files";
-			sourceTree = "<group>";
-		};
 		46881E82150C37AF00D8EF78 = {
 			isa = PBXGroup;
 			children = (
 				46881E97150C37B000D8EF78 /* Calculator */,
-				3A12781615A00CDF00E1983D /* Unit Tests */,
 				46881E90150C37B000D8EF78 /* Frameworks */,
 				46881E8E150C37B000D8EF78 /* Products */,
 			);
@@ -106,7 +63,6 @@
 			isa = PBXGroup;
 			children = (
 				46881E8D150C37B000D8EF78 /* Calculator.app */,
-				3A12781115A00CDF00E1983D /* Unit Tests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -117,7 +73,6 @@
 				46881E91150C37B000D8EF78 /* UIKit.framework */,
 				46881E93150C37B000D8EF78 /* Foundation.framework */,
 				46881E95150C37B000D8EF78 /* CoreGraphics.framework */,
-				3A12781215A00CDF00E1983D /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -151,24 +106,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		3A12781015A00CDF00E1983D /* Unit Tests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 3A12782215A00CDF00E1983D /* Build configuration list for PBXNativeTarget "Unit Tests" */;
-			buildPhases = (
-				3A12780C15A00CDF00E1983D /* Sources */,
-				3A12780D15A00CDF00E1983D /* Frameworks */,
-				3A12780E15A00CDF00E1983D /* Resources */,
-				3A12780F15A00CDF00E1983D /* ShellScript */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "Unit Tests";
-			productName = "Unit Tests";
-			productReference = 3A12781115A00CDF00E1983D /* Unit Tests.octest */;
-			productType = "com.apple.product-type.bundle";
-		};
 		46881E8C150C37AF00D8EF78 /* Calculator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 46881EAB150C37B000D8EF78 /* Build configuration list for PBXNativeTarget "Calculator" */;
@@ -208,20 +145,11 @@
 			projectRoot = "";
 			targets = (
 				46881E8C150C37AF00D8EF78 /* Calculator */,
-				3A12781015A00CDF00E1983D /* Unit Tests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		3A12780E15A00CDF00E1983D /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3A12781B15A00CDF00E1983D /* InfoPlist.strings in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		46881E8B150C37AF00D8EF78 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -233,31 +161,7 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		3A12780F15A00CDF00E1983D /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
-		3A12780C15A00CDF00E1983D /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				3A12781E15A00CDF00E1983D /* Unit_Tests.m in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		46881E89150C37AF00D8EF78 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -272,14 +176,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		3A12781915A00CDF00E1983D /* InfoPlist.strings */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3A12781A15A00CDF00E1983D /* en */,
-			);
-			name = InfoPlist.strings;
-			sourceTree = "<group>";
-		};
 		46881E9A150C37B000D8EF78 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -299,42 +195,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		3A12782015A00CDF00E1983D /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Unit Tests/Unit Tests-Prefix.pch";
-				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Debug;
-		};
-		3A12782115A00CDF00E1983D /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
-					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
-				);
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "Unit Tests/Unit Tests-Prefix.pch";
-				INFOPLIST_FILE = "Unit Tests/Unit Tests-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				WRAPPER_EXTENSION = octest;
-			};
-			name = Release;
-		};
 		46881EA9150C37B000D8EF78 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -405,14 +265,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		3A12782215A00CDF00E1983D /* Build configuration list for PBXNativeTarget "Unit Tests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				3A12782015A00CDF00E1983D /* Debug */,
-				3A12782115A00CDF00E1983D /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-		};
 		46881E87150C37AF00D8EF78 /* Build configuration list for PBXProject "Calculator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
