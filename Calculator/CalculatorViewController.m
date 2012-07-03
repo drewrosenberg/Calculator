@@ -66,7 +66,6 @@
         if (digit !=@"0"){
             self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
-            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];
         }
         return;
     }
@@ -77,9 +76,8 @@
         if( [self.display.text rangeOfString:@"."].location != NSNotFound){return;}
     }
 
-    //put the digit on the display and log
+    //put the digit on the display
     self.display.text = [self.display.text stringByAppendingString:digit];
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
@@ -105,7 +103,8 @@
     self.display.text = resultString;
 }
 - (IBAction)enterPressed {
-    //add a space to the log
+    //add display followed by a space
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:self.display.text];
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
 
     [self.brain pushOperand:[self.display.text doubleValue]];
@@ -124,33 +123,12 @@
     //only use the backspace if the user is in the middle of entering a number
     if (self.userIsInTheMiddleOfEnteringANumber){
         
-        //set variable to current entry and initialize newEntry to zero
-        NSString * currentEntry = self.display.text;
-        NSString * newEntry = @"0";
-    
         //if more than one digit has been pressed, change new entry from zero to display less one digit
-        if (currentEntry.length > 1){
-            newEntry = [currentEntry substringToIndex:[currentEntry length]-1];
-        }
-    
-        //set display to the new entry
-        self.display.text = newEntry;
-    
-        //if current entry was not zero, replace it with the new entry in the program log
-        if (![currentEntry isEqualToString:@"0"]){
-            int entryIndexincalculatorProgramDisplay = self.calculatorProgramDisplay.text.length - currentEntry.length;
-
-            //remove old value
-            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text substringToIndex:entryIndexincalculatorProgramDisplay];
-        
-            //replace it with new value
-            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:newEntry];
-        }
-        else{
-            //user is no longer entering a number
+        if (self.display.text.length > 1){
+            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
+        }else{
+            self.display.text = @"0";
             self.userIsInTheMiddleOfEnteringANumber = NO;
-            //remove last digit from the program log
-            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text substringToIndex:[self.calculatorProgramDisplay.text length]-1];
         }
     }
 }
