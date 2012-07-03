@@ -399,7 +399,6 @@
                 <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
                 <relationship kind="outlet" name="calculatorProgramDisplay" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
-                <relationship kind="outlet" name="keylog" candidateClass="UILabel"/>
             </relationships>
         </class>
     </classes>

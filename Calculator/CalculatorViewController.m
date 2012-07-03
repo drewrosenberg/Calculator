@@ -99,10 +99,9 @@
 - (IBAction)backSpacePressed:(id)sender {
     //only use the backspace if the user is in the middle of entering a number
     if (self.userIsInTheMiddleOfEnteringANumber){
-        //current entry is the display's text
+        
+        //set variable to current entry and initialize newEntry to zero
         NSString * currentEntry = self.display.text;
-    
-        //initialize the new entry to zero
         NSString * newEntry = @"0";
     
         //if more than one digit has been pressed, change new entry from zero to display less one digit
