@@ -381,8 +381,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
+                        <outlet property="calculatorProgramDisplay" destination="aoL-fl-46T" id="YRa-mf-6JF"/>
                         <outlet property="display" destination="YMm-Dh-rJb" id="wWA-yk-fpI"/>
-                        <outlet property="keylog" destination="aoL-fl-46T" id="TtA-Zs-fca"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4" sceneMemberID="firstResponder"/>
@@ -397,6 +397,7 @@
                 <relationship kind="action" name="backSpacePressed:"/>
                 <relationship kind="action" name="digitPressed:" candidateClass="UIButton"/>
                 <relationship kind="action" name="operationPressed:" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="calculatorProgramDisplay" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="display" candidateClass="UILabel"/>
                 <relationship kind="outlet" name="keylog" candidateClass="UILabel"/>
             </relationships>

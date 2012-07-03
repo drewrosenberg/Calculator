@@ -20,7 +20,7 @@
 
 //----- synthesize displays ---------//
 @synthesize display = _display; 
-@synthesize keylog = _keylog;
+@synthesize calculatorProgramDisplay = _calculatorProgramDisplay;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
@@ -46,7 +46,7 @@
         if (digit !=@"0"){
             self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
-            self.keylog.text = [self.keylog.text stringByAppendingString:digit];
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];
         }
         return;
     }
@@ -59,7 +59,7 @@
 
     //put the digit on the display and log
     self.display.text = [self.display.text stringByAppendingString:digit];
-    self.keylog.text = [self.keylog.text stringByAppendingString:digit];             
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];             
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {     
@@ -67,12 +67,12 @@
     
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
     else{
-        self.keylog.text =[self.keylog.text stringByAppendingString:@" "];
+        self.calculatorProgramDisplay.text =[self.calculatorProgramDisplay.text stringByAppendingString:@" "];
         }
     
     //log the operation and space to the key log
-    self.keylog.text = [self.keylog.text stringByAppendingString:operation];
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:operation];
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
     
     double result = [self.brain performOperation:operation];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
@@ -82,7 +82,7 @@
 }
 - (IBAction)enterPressed {
     //add a space to the log
-    self.keylog.text = [self.keylog.text stringByAppendingString:@" "];
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
 
     [self.brain pushOperand:[self.display.text doubleValue]];
     self.userIsInTheMiddleOfEnteringANumber = NO;
@@ -92,7 +92,7 @@
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
     self.display.text = @"0";
-    self.keylog.text = @"";
+    self.calculatorProgramDisplay.text = @"";
     [self.brain clearOperands];
 }
 
@@ -115,19 +115,19 @@
     
         //if current entry was not zero, replace it with the new entry in the program log
         if (![currentEntry isEqualToString:@"0"]){
-            int entryIndexinKeylog = self.keylog.text.length - currentEntry.length;
+            int entryIndexincalculatorProgramDisplay = self.calculatorProgramDisplay.text.length - currentEntry.length;
 
             //remove old value
-            self.keylog.text = [self.keylog.text substringToIndex:entryIndexinKeylog];
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text substringToIndex:entryIndexincalculatorProgramDisplay];
         
             //replace it with new value
-            self.keylog.text = [self.keylog.text stringByAppendingString:newEntry];
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:newEntry];
         }
         else{
             //user is no longer entering a number
             self.userIsInTheMiddleOfEnteringANumber = NO;
             //remove last digit from the program log
-            self.keylog.text = [self.keylog.text substringToIndex:[self.keylog.text length]-1];
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text substringToIndex:[self.calculatorProgramDisplay.text length]-1];
         }
     }
 }
@@ -136,7 +136,7 @@
 
 - (void)viewDidUnload {
     [self setDisplay:nil];
-    [self setKeylog:nil];
+    [self setCalculatorProgramDisplay:nil];
     [super viewDidUnload];
 }
 @end
