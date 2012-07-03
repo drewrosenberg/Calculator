@@ -95,6 +95,7 @@
     self.keylog.text = @"";
     [self.brain clearOperands];
 }
+
 - (IBAction)backSpacePressed:(id)sender {
     //only use the backspace if the user is in the middle of entering a number
     if (self.userIsInTheMiddleOfEnteringANumber){
