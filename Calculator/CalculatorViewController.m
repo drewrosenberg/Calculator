@@ -68,16 +68,15 @@
     NSString *digit = [sender currentTitle];
     NSLog(@"digit pressed = %@", digit);
     
-    //if the user was not entering a number, they are now (unless they are hitting zero), then return
+    //if the user was not entering a number, they are now, then return
     if (!self.userIsInTheMiddleOfEnteringANumber)
     {
-        if (![digit isEqualToString:@"0"]){
-            //remove equal sign from calculator program log if there is one
-            self.showEqualSign = NO;
+        //remove equal sign from calculator program log if there is one
+        self.showEqualSign = NO;
             
-            self.userIsInTheMiddleOfEnteringANumber = YES;
-            self.display.text = digit;
-        }
+        self.userIsInTheMiddleOfEnteringANumber = YES;
+        self.display.text = digit;
+        
         return;
     }
         
@@ -87,8 +86,12 @@
         if( [self.display.text rangeOfString:@"."].location != NSNotFound){return;}
     }
 
-    //if the user was already entering a number and a valid digit (or decimal) was pressed put the digit on the display
-    self.display.text = [self.display.text stringByAppendingString:digit];
+    //if the user was already entering a number append it unless the existing display is zero.  In that case replace it
+    if ([self.display.text isEqualToString:@"0"]) {
+        self.display.text = digit;
+    }else{
+        self.display.text = [self.display.text stringByAppendingString:digit];
+    }
 }
 
 - (IBAction)operationPressed:(UIButton *)sender {
