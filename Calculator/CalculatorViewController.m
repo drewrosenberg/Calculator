@@ -89,6 +89,8 @@
             self.calculatorProgramDisplay.text =[self.calculatorProgramDisplay.text stringByAppendingString:@" "];
         }
     
+    //hide equal sign
+    self.showEqualSign = NO;
     //log the operation and space to the key log
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:operation];
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
@@ -130,6 +132,17 @@
             self.display.text = @"0";
             self.userIsInTheMiddleOfEnteringANumber = NO;
         }
+    }
+}
+- (IBAction)negativePressed:(id)sender {
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        if ([self.display.text rangeOfString:@"-"].location == NSNotFound) {
+            self.display.text = [@"-" stringByAppendingString:self.display.text];
+        }else{
+            self.display.text = [self.display.text substringFromIndex:1];
+        }
+    }else{
+        [self operationPressed:sender];
     }
 }
 

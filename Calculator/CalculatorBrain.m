@@ -75,8 +75,12 @@
         //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
         } else if ([@"Pi" isEqualToString:operation]){
             result = M_PI;
+        //negative
+        } else if ([@"+/-" isEqualToString:operation]){
+            result = 0 - [self popOperand];
         }
-        }
+
+    }
 
         NSLog(@"Stack after:%@",self);
 
