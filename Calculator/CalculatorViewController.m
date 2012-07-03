@@ -40,7 +40,9 @@
 //This method is called whenever the showEqualSign property is updated.
 //the equal sign is automatically added or removed appropriately just by updating the value of the ShowEqualSign property
 -(void)setShowEqualSign:(BOOL)showEqualSign{
-    _showEqualSign = showEqualSign; //set the instance variable showEqualSign
+    
+    //set the instance variable showEqualSign
+    _showEqualSign = showEqualSign;
 
     //first get the existing location of the equal sign in the display
     NSUInteger equalSignLocation = [self.calculatorProgramDisplay.text rangeOfString:@"="].location;
@@ -62,9 +64,6 @@
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
 
-    //remove equal sign from calculator program log if there is one
-    self.showEqualSign = NO;
-
     //Get digit from button title
     NSString *digit = [sender currentTitle];
     NSLog(@"digit pressed = %@", digit);
@@ -72,7 +71,10 @@
     //if the user was not entering a number, they are now (unless they are hitting zero), then return
     if (!self.userIsInTheMiddleOfEnteringANumber)
     {
-        if (digit !=@"0"){
+        if (![digit isEqualToString:@"0"]){
+            //remove equal sign from calculator program log if there is one
+            self.showEqualSign = NO;
+            
             self.userIsInTheMiddleOfEnteringANumber = YES;
             self.display.text = digit;
         }
