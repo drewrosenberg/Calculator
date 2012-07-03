@@ -16,6 +16,7 @@
 
     @synthesize operandStack = _operandStack;
 
+#pragma mark - Operand Stack Methods
 ////////////// OPERAND STACK METHODS //////////////////////////
     - (NSMutableArray *)operandStack
     {
@@ -41,7 +42,7 @@
     }
 //////////////////////////////////////////////////////////////
 
-
+#pragma mark - operation methods
 ////////////// PERFORM OPERATION /////////////////////////////
     - (double)performOperation:(NSString * ) operation
     {
