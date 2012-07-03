@@ -14,6 +14,7 @@
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic) BOOL showEqualSign;
 @end
 
 @implementation CalculatorViewController
@@ -25,6 +26,7 @@
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
+@synthesize showEqualSign = _showEqualSign;
 
 //------- synthesize and init model ----------//
 @synthesize brain = _brain;
@@ -33,8 +35,26 @@
     return _brain;
 }
 
+-(void)setShowEqualSign:(BOOL)showEqualSign{
+    _showEqualSign = showEqualSign;
+
+    NSUInteger equalSignLocation = [self.calculatorProgramDisplay.text rangeOfString:@"="].location;
+    if (showEqualSign) {
+        if (equalSignLocation == NSNotFound) {
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@"="];
+        }
+    }else{
+        if (equalSignLocation != NSNotFound){
+            self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text substringToIndex:equalSignLocation];
+        }
+    }
+}
+
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
+
+    //remove equal sign from calculator program log if there is one
+    self.showEqualSign = NO;
 
     //Get digit from button title
     NSString *digit = [sender currentTitle];
@@ -59,20 +79,24 @@
 
     //put the digit on the display and log
     self.display.text = [self.display.text stringByAppendingString:digit];
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];             
+    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:digit];
 }
 
-- (IBAction)operationPressed:(UIButton *)sender {     
+- (IBAction)operationPressed:(UIButton *)sender {
     NSString *operation = [sender currentTitle];
     
+   
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
     else{
-        self.calculatorProgramDisplay.text =[self.calculatorProgramDisplay.text stringByAppendingString:@" "];
+            self.calculatorProgramDisplay.text =[self.calculatorProgramDisplay.text stringByAppendingString:@" "];
         }
     
     //log the operation and space to the key log
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:operation];
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
+    //show the equal sign if there is none
+    self.showEqualSign = YES;
+
     
     double result = [self.brain performOperation:operation];
     NSString *resultString = [NSString stringWithFormat:@"%g", result];
