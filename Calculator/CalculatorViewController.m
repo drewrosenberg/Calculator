@@ -125,6 +125,9 @@
     self.display.text = resultString;
 }
 - (IBAction)enterPressed {
+    //if value is -0, change it to 0 for cosmetic purposes
+    if ([self.display.text isEqualToString:@"-0"]){self.display.text = 0;}
+        
     //add number to the calculator program log followed by a space
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:self.display.text];
     self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
