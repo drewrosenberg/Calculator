@@ -13,7 +13,9 @@
 @interface CalculatorViewController()
 @property (nonatomic) BOOL userIsInTheMiddleOfEnteringANumber;
 @property (nonatomic) BOOL decimalPressed;
-@property (nonatomic, strong) CalculatorBrain *brain;
+@property (nonatomic, strong) NSArray * thisProgram;
+@property (nonatomic, strong) NSArray * testVariableValues;
+@property (nonatomic, strong) NSDictionary * activeVariableValues;
 @property (nonatomic) BOOL showEqualSign;
 @end
 
@@ -22,19 +24,32 @@
 //----- synthesize displays ---------//
 @synthesize display = _display; 
 @synthesize calculatorProgramDisplay = _calculatorProgramDisplay;
+@synthesize variableDisplay = _variableDisplay;
 
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
 @synthesize showEqualSign = _showEqualSign;
+@synthesize testVariableValues = _testVariableValues;
+@synthesize activeVariableValues = _activeVariableValues;
+@synthesize thisProgram = _thisProgram;
 
-//------- synthesize and init model ----------//
-@synthesize brain = _brain;
-- (CalculatorBrain *)brain{
-    if (!_brain) _brain = [[CalculatorBrain alloc] init];
-    return _brain;
+//------- synthesize and init variables and model ----------//
+
+-(void) refreshDisplays{
+    //refresh main display
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+    
+    //refresh log
+    self.calculatorProgramDisplay.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
+    
+    //refresh variable display
+    self.variableDisplay.text = @"";
+    for (NSString * thisVariable in [CalculatorBrain variablesUsedInProgram:self.thisProgram]) {
+        self.variableDisplay.text = [NSString stringWithFormat:@"%@ %@=%@", self.variableDisplay.text, thisVariable, [self.activeVariableValues objectForKey:thisVariable]];
+    }
 }
-
 #pragma mark - custom setters and getters
 
 //This method is called whenever the showEqualSign property is updated.
@@ -59,6 +74,55 @@
         }
     }
 }
+
+-(NSArray *)testVariableValues{
+    if (_testVariableValues == nil)
+    {
+        _testVariableValues = [[NSArray alloc] init];
+        
+        //test variable set 1 (active set)
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:0],@"x",
+                                [NSNumber numberWithDouble:0],@"y",
+                                [NSNumber numberWithDouble:0],@"foo",
+                                nil]];
+        
+        //test variable set 2
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:1],@"x",
+                                [NSNumber numberWithDouble:1],@"y",
+                                [NSNumber numberWithDouble:1],@"foo",
+                                nil]];
+        
+        //test variable set 3
+        _testVariableValues = [_testVariableValues arrayByAddingObject:
+                               [NSDictionary dictionaryWithObjectsAndKeys:
+                                [NSNumber numberWithDouble:2],@"x",
+                                [NSNumber numberWithDouble:2],@"y",
+                                [NSNumber numberWithDouble:2],@"foo",
+                                nil]];
+        
+    }
+    
+    return _testVariableValues;
+}
+
+-(NSDictionary *) activeVariableValues{
+    //initialize to test1 button values
+    if (!_activeVariableValues){
+        _activeVariableValues = [self.testVariableValues objectAtIndex:0];
+    }
+    
+    return _activeVariableValues;
+}
+
+-(NSArray*) thisProgram{
+    if (_thisProgram == nil) _thisProgram = [[NSArray alloc] init];
+    return _thisProgram;
+}
+
 
 #pragma mark - React To Buttons
 //------- React to Buttons ------------------//
@@ -99,43 +163,70 @@
     
     //press enter if the user didn't yet
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
-    else{
-            self.calculatorProgramDisplay.text =[self.calculatorProgramDisplay.text stringByAppendingString:@" "];
-        }
     
-    
-    /// --- update the calculator program log ---///
     //hide equal sign so that the operation can be put there
     self.showEqualSign = NO;
     
-    //log the operation and space to the calculator program log
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:operation];
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
+    //add the operation to the program
+    self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
+    
+    //refresh all of the displays
+    [self refreshDisplays];
     
     //add the equal sign back
     self.showEqualSign = YES;
-    //////////////
-    
-    //run the calculation
-    double result = [self.brain performOperation:operation];
-    NSString *resultString = [NSString stringWithFormat:@"%g", result];
-  
-    //put the result back on the stack and on the display
-    [self.brain pushOperand:result];
-    self.display.text = resultString;
 }
-- (IBAction)enterPressed {
-    //if value is -0, change it to 0 for cosmetic purposes
-    if ([self.display.text isEqualToString:@"-0"]){self.display.text = 0;}
-        
-    //add number to the calculator program log followed by a space
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:self.display.text];
-    self.calculatorProgramDisplay.text = [self.calculatorProgramDisplay.text stringByAppendingString:@" "];
 
-    //push the number onto the operand stack
-    [self.brain pushOperand:[self.display.text doubleValue]];
+- (IBAction)undoPressed:(id)sender {
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        //remove last character and refresh display
+        if ([self.display.text length] != 0){
+            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
+        }
+    }
+    else {
+        //remove last object and refresh displays
+        NSMutableArray *mutableProgram;
+        mutableProgram = [self.thisProgram mutableCopy];
+        [mutableProgram removeObject:[mutableProgram lastObject]];
+        self.thisProgram = mutableProgram;
+        [self refreshDisplays];
+    }
+}
+
+- (IBAction)variablePressed:(id)sender {
+    NSString *variable = [sender currentTitle];
+    self.display.text = variable;
     
-    //reset decimalPressed and userIsInTheMiddleofEnteringANumber properties to No
+    //add the variable and run the program
+    self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    
+    [self refreshDisplays];
+}
+
+- (IBAction)testButtonPressed:(id)sender {
+    NSString * testButton = [sender currentTitle];
+    int index = [[testButton substringFromIndex:[testButton length]-1] intValue];
+    
+    self.activeVariableValues = [self.testVariableValues objectAtIndex:index];
+    
+    [self refreshDisplays];
+    
+    //recaculate with new variables
+    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%g", result];
+} 
+
+
+- (IBAction)enterPressed {
+    NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
+    
+    self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
+    
+    //[CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    
+    [self refreshDisplays];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
 }
@@ -145,8 +236,8 @@
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
     self.display.text = @"0";
-    self.calculatorProgramDisplay.text = @"";
-    [self.brain clearOperands];
+    self.variableDisplay.text = @"";
+    self.thisProgram = nil;
 }
 
 - (IBAction)backSpacePressed:(id)sender {
@@ -185,6 +276,7 @@
 - (void)viewDidUnload {
     [self setDisplay:nil];
     [self setCalculatorProgramDisplay:nil];
+    [self setVariableDisplay:nil];
     [super viewDidUnload];
 }
 @end
