@@ -179,10 +179,9 @@
 
 - (IBAction)undoPressed:(id)sender {
     if (self.userIsInTheMiddleOfEnteringANumber){
-        //remove last character and refresh display
-        if ([self.display.text length] != 0){
-            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
-        }
+        
+        //backspace
+        [self backSpacePressed:self];
     }
     else {
         //remove last object and refresh displays
@@ -224,8 +223,6 @@
     
     self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
-    //[CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-    
     [self refreshDisplays];
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
@@ -237,6 +234,7 @@
     self.decimalPressed = NO;
     self.display.text = @"0";
     self.variableDisplay.text = @"";
+    self.calculatorProgramDisplay.text = @"";
     self.thisProgram = nil;
 }
 

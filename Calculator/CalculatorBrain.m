@@ -12,6 +12,9 @@
 @property (nonatomic, strong) NSMutableArray *programStack;
 @end
 
+
+
+#pragma mark - static variables
 //STATIC VARIABLES
 static NSDictionary *OPERATION_LIST = nil;
 
@@ -29,7 +32,7 @@ static NSDictionary *OPERATION_LIST = nil;
                           [NSNumber numberWithInt:1], @"SIN",
                           [NSNumber numberWithInt:1], @"COS",
                           [NSNumber numberWithInt:1], @"SQRT",
-                          [NSNumber numberWithInt:1], @"+/-",
+                          [NSNumber numberWithInt:1], @"±",
                           [NSNumber numberWithInt:0], @"Pi",
                           nil];
     }
@@ -38,6 +41,8 @@ static NSDictionary *OPERATION_LIST = nil;
 }
 
 @synthesize programStack = _programStack;
+
+#pragma mark - Legacy Methods
 
 ////////////// Legacy Methods //////////////////////////
 
@@ -70,7 +75,9 @@ static NSDictionary *OPERATION_LIST = nil;
 }
 
 
+#pragma mark - API Methods
 /////// API Methods /////////////////
+
 + (NSSet *)variablesUsedInProgram:(id)program
 {
     //initialize set
@@ -96,24 +103,26 @@ static NSDictionary *OPERATION_LIST = nil;
     
 }
 
+
+//Test if an operation takes two operands
 +(BOOL) is2Operation: (NSString *)operation
 {
     return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:2];
 }
 
+//Test if an operation takes one operand
 +(BOOL) is1Operation: (NSString *)operation
 {
     return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:1];}
 
+//Test if the string is an operation
 +(BOOL) isOperation:(NSString *)operation
 {
     return [[self operationList] objectForKey:operation] != nil;
 }
 
-+(NSString *) removeTrailingComma:(NSString *)myString{
-    return [myString substringToIndex:([myString length]-2)];
-}
 
+//description of stack method
 + (NSString *) descriptionOfTopOfStack:(NSMutableArray *)stack
 {
     NSString *result;
@@ -160,15 +169,18 @@ static NSDictionary *OPERATION_LIST = nil;
     return result;
 }
 
+//description of program operation
 + (NSString *) descriptionOfProgram:(id)program
 {
-    
     NSMutableArray *stack;
+    
+    //set the stack if an array was passed in
     if ([program isKindOfClass:[NSArray self]]){
         stack = [program mutableCopy];
     }
     NSString *result = [self descriptionOfTopOfStack:stack];
     
+    //run through the stack and build the description of program string
     while ([stack lastObject]) {
         result = [NSString stringWithFormat:@"%@, %@",[self descriptionOfTopOfStack:stack],result];
     }
@@ -215,9 +227,10 @@ static NSDictionary *OPERATION_LIST = nil;
                 //SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT//
             } else if ([@"SQRT" isEqualToString:operation]){
                 result = sqrt([self popOperandOffStack:stack]);
-                //+/- +/- +/- +/- +/- +/- +/- +/- +/- +/- +/- +/-  //
-            } else if ([@"+/-" isEqualToString:operation]){
+                //± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ±  //
+            } else if ([@"±" isEqualToString:operation]){
                 result = -[self popOperandOffStack:stack];
+                if (result == -0){result = 0;}
                 //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
             } else if ([@"Pi" isEqualToString:operation]){
                 result = M_PI;
@@ -227,7 +240,9 @@ static NSDictionary *OPERATION_LIST = nil;
     return result;
 }
 
+#pragma mark - RunProgram Methods
 //// RunProgram Methods /////
+
 + (double) runProgram:(id)program
 {
     NSMutableArray *stack;
@@ -246,9 +261,9 @@ static NSDictionary *OPERATION_LIST = nil;
     
     //---Go through program and replace all variables with their values
     //for index = 0 to number of objects in program
-    for (int index=0; index != [stack count]; index++){
+    for (int index=0; index < stack.count; index++){
         //if object is a string
-        if ([[stack objectAtIndex:index] isKindOfClass:[NSString self]]){
+        if ([[stack objectAtIndex:index] isKindOfClass:[NSString class]]){
             //if object is a variable
             if (![self isOperation:[stack objectAtIndex:index]]){
                 //replaceObjectAtIndex: index withObject: variablevalue
