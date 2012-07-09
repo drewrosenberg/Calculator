@@ -221,6 +221,7 @@
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
     
+    //add the number to thisProgram
     self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
     [self refreshDisplays];
@@ -268,7 +269,7 @@
 }
 
 #pragma mark - memory cleanup
-
+//This stuff is probably not needed anymore, but the compiler put it there and there and it doesn't hurt to leave it
 //---------------------------------------------
 
 - (void)viewDidUnload {
