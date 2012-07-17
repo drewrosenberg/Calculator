@@ -19,9 +19,9 @@
 @property (readonly) id program;
 
 //class methods
-+ (double) runProgram:(id)program;
++ (id) runProgram:(id)program;
 
-+ (double) runProgram:(id)program
++ (id) runProgram:(id)program
   usingVariableValues:(NSDictionary *)variableValues;
 
 + (NSSet *)variablesUsedInProgram:(id)program;

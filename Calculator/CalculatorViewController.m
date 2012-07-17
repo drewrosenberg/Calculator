@@ -38,8 +38,8 @@
 
 -(void) refreshDisplays{
     //refresh main display
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-    self.display.text = [NSString stringWithFormat:@"%g", result];
+    id result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%@", result];
     
     //refresh log
     self.calculatorProgramDisplay.text = [CalculatorBrain descriptionOfProgram:self.thisProgram];
@@ -213,8 +213,8 @@
     [self refreshDisplays];
     
     //recaculate with new variables
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-    self.display.text = [NSString stringWithFormat:@"%g", result];
+    id result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    self.display.text = [NSString stringWithFormat:@"%@", result];
 } 
 
 

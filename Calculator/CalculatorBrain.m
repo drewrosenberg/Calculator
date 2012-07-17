@@ -66,7 +66,7 @@ static NSDictionary *OPERATION_LIST = nil;
 - (double)performOperation:(NSString * ) operation
 {
     [self.programStack addObject:operation];
-    return [CalculatorBrain runProgram:self.program];
+    return [[CalculatorBrain runProgram:self.program] doubleValue];
 }
 
 - (id)program
@@ -105,18 +105,18 @@ static NSDictionary *OPERATION_LIST = nil;
 
 
 //Test if an operation takes two operands
-+(BOOL) is2Operation: (NSString *)operation
++(BOOL) is2Operation: (id)operation
 {
     return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:2];
 }
 
 //Test if an operation takes one operand
-+(BOOL) is1Operation: (NSString *)operation
++(BOOL) is1Operation: (id)operation
 {
     return [[self operationList] objectForKey:operation] == [NSNumber numberWithInt:1];}
 
 //Test if the string is an operation
-+(BOOL) isOperation:(NSString *)operation
++(BOOL) isOperation:(id)operation
 {
     return [[self operationList] objectForKey:operation] != nil;
 }
@@ -188,71 +188,137 @@ static NSDictionary *OPERATION_LIST = nil;
     return result;
 }
 
-
-+ (double) popOperandOffStack:(NSMutableArray *)stack
-{
-    double result = 0;
++(id) perform1OperandOperaton:(id)operation withOperand:(id)operand{
+    id result;
     
-    //get the last object off of the stack and remove it if it exists
-    id topOfStack = [stack lastObject];
-    if (topOfStack) [stack removeLastObject];
+    //test for errors, return them if there are any
+    if (![operand isKindOfClass:[NSNumber class]]){ return operand;}
     
-    //if it's a number, result = the doubleValue of the number
-    if ([topOfStack isKindOfClass:[NSNumber class]]){
-        result = [topOfStack doubleValue];
+    //perform operations
+    //SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN  //
+    if ([operation isEqualToString:@"SIN"]){
+        result = [NSNumber numberWithDouble:sin([operand doubleValue])];
     }
-    // if it is a string, perform the operation
-    else if ([topOfStack isKindOfClass:[NSString class]]){
-        {
-            NSString *operation = topOfStack;
-            //+++++++++++++++++++++++++++++++++++++++++++++++++//
-            if ([operation isEqualToString:@"+"]) {
-                result = [self popOperandOffStack:stack] + [self popOperandOffStack:stack];
-                //*************************************************//
-            } else if ([@"*" isEqualToString:operation]) {
-                result = [self popOperandOffStack:stack] * [self popOperandOffStack:stack];
-                /////////////////////////////////////////////////////
-            } else if ([@"/" isEqualToString:operation]) {
-                result = [self popOperandOffStack:stack]; //make result divisor
-                result = [self popOperandOffStack:stack]/result; // result;
-                //-------------------------------------------------//
-            } else if ([@"-" isEqualToString:operation]) {
-                result = (0 - [self popOperandOffStack:stack])+ [self popOperandOffStack:stack];
-                //SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN SIN  //
-            } else if ([@"SIN" isEqualToString:operation]){
-                result = sin([self popOperandOffStack:stack]);
-                //COS COS COS COS COS COS COS COS COS COS COS COS  //
-            } else if ([@"COS" isEqualToString:operation]){
-                result = cos([self popOperandOffStack:stack]);
-                //SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT//
-            } else if ([@"SQRT" isEqualToString:operation]){
-                result = sqrt([self popOperandOffStack:stack]);
-                //± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ±  //
-            } else if ([@"±" isEqualToString:operation]){
-                result = -[self popOperandOffStack:stack];
-                if (result == -0){result = 0;}
-                //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
-            } else if ([@"Pi" isEqualToString:operation]){
-                result = M_PI;
-            }
+    
+    //COS COS COS COS COS COS COS COS COS COS COS COS  //
+    else if ([operation isEqualToString:@"COS"]){
+        result = [NSNumber numberWithDouble:cos([operand doubleValue])];
+    }
+    
+    //SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT SQRT//
+    else if ([operation isEqualToString:@"SQRT"]){
+        result = [NSNumber numberWithDouble:sqrt([operand doubleValue])];
+        if (result == [NSNumber numberWithDouble:NAN]){ result = @"Error: √(-1)";}
+    }
+    
+    //± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ± ±  //
+    else if ([operation isEqualToString:@"±"]){
+        if ([operand doubleValue] == 0){
+            return operand;
+        }
+        else{
+            result = [NSNumber numberWithDouble:-[operand doubleValue] ];
         }
     }
+
+    return result;
+}
+
++(id) perform2OperandOperation:(id)operation operand1:(id)operand1 operand2:(id)operand2{
+    id result;
+    
+    //test for errors, return them if there are any
+    if (![operand1 isKindOfClass:[NSNumber class]]){ return operand1;}
+    if (![operand2 isKindOfClass:[NSNumber class]]){ return operand2;}
+    
+    //perform operations
+    //+++++++++++++++++++++++++++++++++++++++++++++++++//
+    if ([operation isEqualToString:@"+"]) {
+        result =
+        [NSNumber numberWithDouble:
+         [operand1 doubleValue] +
+         [operand2 doubleValue]];
+        //*************************************************//
+    } else if ([operation isEqualToString:@"*"]){
+        result =
+        [NSNumber numberWithDouble:
+         [operand1 doubleValue] *
+         [operand2 doubleValue]];
+        /////////////////////////////////////////////////////
+    } else if ([operation isEqualToString:@"/"]){
+        if ([operand1 doubleValue] == 0) {
+            result = @"ERROR: Divide by 0";
+        }
+        else{
+            result =
+            [NSNumber numberWithDouble:
+             [operand2 doubleValue] /
+             [operand1 doubleValue]];
+        }
+        //-------------------------------------------------//
+    } else if ([operation isEqualToString:@"-"]){
+        result =
+        [NSNumber numberWithDouble:
+         [operand2 doubleValue] -
+         [operand1 doubleValue]];
+    }
+    
+    return result;
+}
+    
+
++ (id) popItemOffStack:(NSMutableArray *)stack
+{
+    //get the last object off of the stack and remove it if it exists
+    id result = [stack lastObject];
+    if (result) [stack removeLastObject];
+
+    
+    //if it is a two operand operation, pull two more operands, test for errors, then perform operation
+    if ([self is2Operation:result]){
+        
+        id operand1 = [self popItemOffStack:stack];
+        id operand2 = [self popItemOffStack:stack];
+        
+        //pass the operation (current value of result and two 
+        result = [self perform2OperandOperation:result operand1:operand1 operand2:operand2];
+        
+    }
+    
+    //if it is a single operand operation, pull the operand, test for errors, then perform operation
+    if ([self is1Operation:result]){
+        id operand = [self popItemOffStack:stack];
+        result = [self perform1OperandOperaton:result withOperand:operand];
+        
+    }
+    
+    //address individual strings (no operand operations and anything else we come up with later)
+    if ([result isKindOfClass:[NSString class]]){
+        //PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI PI  //
+        if([result isEqualToString:@"Pi"]){
+            result = [NSNumber numberWithDouble:M_PI];
+        }
+    }
+
+    // if result is not an operation, then return it as is
+    // if it is an NSNumber, then the NSNumber will pass through
+    // if it is an NSString (error message), then that will pass through as well
     return result;
 }
 
 #pragma mark - RunProgram Methods
 //// RunProgram Methods /////
 
-+ (double) runProgram:(id)program
++ (id) runProgram:(id)program
 {
     NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray self]]){
         stack = [program mutableCopy];
     }
-    return [self popOperandOffStack:stack];
+    return [self popItemOffStack:stack];
 }
 
-+ (double) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
++ (id) runProgram:(id)program usingVariableValues:(NSDictionary *)variableValues
 {
     NSMutableArray *stack;
     if ([program isKindOfClass:[NSArray self]]){
@@ -272,6 +338,6 @@ static NSDictionary *OPERATION_LIST = nil;
         }
     }
     //then runProgram
-    return ([self popOperandOffStack:stack]);
+    return ([self popItemOffStack:stack]);
 }
 @end
