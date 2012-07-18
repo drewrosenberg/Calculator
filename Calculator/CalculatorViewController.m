@@ -17,7 +17,8 @@
 @property (nonatomic) BOOL decimalPressed;
 @property (nonatomic, strong) NSArray * thisProgram;
 @property (nonatomic, strong) NSArray * testVariableValues;
-@property (nonatomic, strong) NSMutableDictionary * activeVariableValues;
+@property (nonatomic, strong) NSMutableDictionary * validVariables;
+@property (nonatomic) BOOL showEqualSign;
 @end
 
 @implementation CalculatorViewController
@@ -28,9 +29,21 @@
 //------- synthesize properties -----//
 @synthesize userIsInTheMiddleOfEnteringANumber = _userIsInTheMiddleOfEnteringANumber;
 @synthesize decimalPressed = _decimalPressed;
+@synthesize showEqualSign = _showEqualSign;
 @synthesize testVariableValues = _testVariableValues;
-@synthesize activeVariableValues = _activeVariableValues;
+@synthesize validVariables = _validVariables;
 @synthesize thisProgram = _thisProgram;
+
+
+-(NSDictionary *) validVariables{
+    //Set X as a valid variable unless it has already been set
+    if (!_validVariables){
+        _validVariables = [NSDictionary dictionaryWithObject:[NSNumber numberWithDouble:0] forKey:@"x"];
+    }
+    
+    return _validVariables;
+}
+
 
 -(BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)orientation{
     if (!self.splitViewController){
@@ -40,6 +53,8 @@
         return YES;
     }
 }
+
+#pragma mark - Split View Delegate Stuff
 
 //------------split view delegate stuff
 -(void) awakeFromNib
@@ -84,51 +99,31 @@
     //tell the detail view to take the button away
     [self splitViewBarButtonItemPresenter].splitViewBarButtonItem = nil;
 }
- 
-//------- synthesize and init test variables and model ----------//
--(NSArray *)testVariableValues{
-    if (_testVariableValues == nil)
-    {
-        _testVariableValues = [[NSArray alloc] init];
-        
-        //test variable set 1 (active set)
-        _testVariableValues = [_testVariableValues arrayByAddingObject:
-                               [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithDouble:0],@"x",
-                                [NSNumber numberWithDouble:0],@"y",
-                                [NSNumber numberWithDouble:0],@"foo", 
-                                nil]];
-        
-        //test variable set 2
-        _testVariableValues = [_testVariableValues arrayByAddingObject:
-                               [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithDouble:1],@"x",
-                                [NSNumber numberWithDouble:1],@"y",
-                                [NSNumber numberWithDouble:1],@"foo", 
-                                nil]];
-        
-        //test variable set 3
-        _testVariableValues = [_testVariableValues arrayByAddingObject:
-                               [NSDictionary dictionaryWithObjectsAndKeys:
-                                [NSNumber numberWithDouble:2],@"x",
-                                [NSNumber numberWithDouble:2],@"y",
-                                [NSNumber numberWithDouble:2],@"foo", 
-                                nil]];
-   
-    }
 
-    return _testVariableValues;
-}
-
--(NSDictionary *) activeVariableValues{
-    //initialize to test1 button values
-    if (!_activeVariableValues){
-        _activeVariableValues = [self.testVariableValues objectAtIndex:0];
-    }
+#pragma mark - custom setters and getters
+//This method is called whenever the showEqualSign property is updated.
+//the equal sign is automatically added or removed appropriately just by updating the value of the ShowEqualSign property
+-(void)setShowEqualSign:(BOOL)showEqualSign{
     
-    return _activeVariableValues;
+    //set the instance variable showEqualSign
+    _showEqualSign = showEqualSign;
+    
+    //first get the existing location of the equal sign in the display
+    NSUInteger equalSignLocation = [self.title rangeOfString:@"="].location;
+    
+    //if the equal sign is being set, add it only if it is not already there
+    if (showEqualSign) {
+        if (equalSignLocation == NSNotFound) {
+            self.title = [self.title stringByAppendingString:@"="];
+        }
+        //if the equal sign is being removed, check to see if one is present and then remove it
+    }else{
+        if (equalSignLocation != NSNotFound){
+            self.title = [self.title substringToIndex:equalSignLocation];
+        }
+    }
 }
-
+ 
 -(NSArray*) thisProgram{
     if (_thisProgram == nil) _thisProgram = [[NSArray alloc] init];
     return _thisProgram;
@@ -136,8 +131,8 @@
 
 -(void) refreshDisplays{
     //refresh main display
-    double result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
-    self.display.text = [NSString stringWithFormat:@"%g", result];
+    id result = [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.validVariables];
+    self.display.text = [NSString stringWithFormat:@"%@", result];
 
     //refresh log
     if ([self.thisProgram count] == 0) {
@@ -154,50 +149,64 @@
     }
 }
 
+#pragma mark - React To Buttons
 //------- React to Buttons ------------------//
 - (IBAction)digitPressed:(UIButton *)sender{
-
+    
     //Get digit from button title
     NSString *digit = [sender currentTitle];
     NSLog(@"digit pressed = %@", digit);
     
-    
+    //if the user was not entering a number, they are now, then return
     if (!self.userIsInTheMiddleOfEnteringANumber)
     {
-        if (digit !=@"0"){
-            self.userIsInTheMiddleOfEnteringANumber = YES;
-            self.display.text = digit;
-        }
+        //remove equal sign from calculator program log if there is one
+        self.showEqualSign = NO;
+        
+        self.userIsInTheMiddleOfEnteringANumber = YES;
+        self.display.text = digit;
+        
         return;
     }
-        
-    //if a decimal is pressed, make sure there isn't one already
+    
+    //if a decimal is pressed, make sure there isn't one already, then return.
     if ([digit isEqualToString:@"."])
     {
-        //return if decimal is already present
         if( [self.display.text rangeOfString:@"."].location != NSNotFound){return;}
     }
-
-    //put the digit or decimal on the display
-    self.display.text = [self.display.text stringByAppendingString:digit];
+    
+    //if the user was already entering a number append it unless the existing display is zero.  In that case replace it
+    if ([self.display.text isEqualToString:@"0"]) {
+        self.display.text = digit;
+    }else{
+        self.display.text = [self.display.text stringByAppendingString:digit];
+    }
 }
 
-- (IBAction)operationPressed:(UIButton *)sender {     
+- (IBAction)operationPressed:(UIButton *)sender {
     NSString *operation = [sender currentTitle];
     
+    //press enter if the user didn't yet
     if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
-
+    
+    //hide equal sign so that the operation can be put there
+    self.showEqualSign = NO;
+    
+    //add the operation to the program
     self.thisProgram = [self.thisProgram arrayByAddingObject:operation];
-
+    
+    //refresh all of the displays
     [self refreshDisplays];
+    
+    //add the equal sign back
+    self.showEqualSign = YES;
 }
 
 - (IBAction)undoPressed:(id)sender {
     if (self.userIsInTheMiddleOfEnteringANumber){
-        //remove last character and refresh display
-        if ([self.display.text length] != 0){
-            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
-        }
+        
+        //backspace
+        [self backSpacePressed:self];
     }
     else {
         //remove last object and refresh displays
@@ -205,43 +214,71 @@
         mutableProgram = [self.thisProgram mutableCopy];
         [mutableProgram removeObject:[mutableProgram lastObject]];
         self.thisProgram = mutableProgram;
-        [self refreshDisplays];                
+        [self refreshDisplays];
     }
 }
 
-
 - (IBAction)variablePressed:(id)sender {
     NSString *variable = [sender currentTitle];
-    if (self.userIsInTheMiddleOfEnteringANumber){[self enterPressed];}
-
     self.display.text = variable;
     
     //add the variable and run the program
     self.thisProgram = [self.thisProgram arrayByAddingObject:variable];
-    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    [CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.validVariables];
     
     [self refreshDisplays];
 }
 
 - (IBAction)enterPressed {
     NSNumber * thisNumber = [NSNumber numberWithDouble:[self.display.text doubleValue]];
-
-    self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
-    //[CalculatorBrain runProgram:self.thisProgram usingVariableValues:self.activeVariableValues];
+    //add the number to thisProgram
+    self.thisProgram = [self.thisProgram arrayByAddingObject:thisNumber];
     
     [self refreshDisplays];
     self.userIsInTheMiddleOfEnteringANumber = NO;
-    self.decimalPressed = NO;   
+    self.decimalPressed = NO;
 }
 
 - (IBAction)clearPressed {
+    //reset everything
     self.userIsInTheMiddleOfEnteringANumber = NO;
     self.decimalPressed = NO;
     self.display.text = @"0";
+    self.title = @"Drew's Calculator";
     self.thisProgram = nil;
-    [self refreshDisplays];
 }
+
+- (IBAction)backSpacePressed:(id)sender {
+    //only use the backspace if the user is in the middle of entering a number
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        
+        //if more than one digit has been pressed, change new entry from zero to display less one digit
+        if (self.display.text.length > 1){
+            self.display.text = [self.display.text substringToIndex:[self.display.text length]-1];
+        }else{
+            self.display.text = @"0";
+            self.userIsInTheMiddleOfEnteringANumber = NO;
+        }
+    }
+}
+
+- (IBAction)negativePressed:(id)sender {
+    //if the user is entering a number, just either add or remove the negative sign from the display
+    if (self.userIsInTheMiddleOfEnteringANumber){
+        if ([self.display.text rangeOfString:@"-"].location == NSNotFound) {
+            self.display.text = [@"-" stringByAppendingString:self.display.text];
+        }else{
+            self.display.text = [self.display.text substringFromIndex:1];
+        }
+        
+        //if the user is not in the middle of entering a number, pass +/- through as an operation
+    }else{
+        [self operationPressed:sender];
+    }
+}
+
+#pragma mark - Graphing stuff
 
 -(GraphViewController *)splitViewGraphViewController
 {
@@ -258,9 +295,7 @@
         //graph segue preparation
         [segue.destinationViewController setGraphProgram:self.thisProgram];           
     }
-        
 }
-
 
 #pragma GraphViewDelegate
 -(void) graphViewController:(GraphViewController *)sender chooseProgram:(id)program{
@@ -268,8 +303,8 @@
     [self refreshDisplays];
 }
 
-
-
+#pragma mark - memory cleanup
+//This stuff is probably not needed anymore, but the compiler put it there and there and it doesn't hurt to leave it
 //---------------------------------------------
 
 - (void)viewDidUnload {

@@ -111,7 +111,7 @@
 
         NSDictionary * variables = [NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:x] forKey:@"x"];
                 
-        float y = [CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables];
+        float y = [[CalculatorBrain runProgram:self.graphProgram usingVariableValues:variables] doubleValue];
 
         //if y is a valid value, plot it
         if (!isnan(y)){
